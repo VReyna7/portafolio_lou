@@ -28,6 +28,10 @@
   color: var(--ink-soft);
 }
 
+.hero__intro li::marker {
+  color: var(--coral);
+}
+
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -45,6 +49,8 @@
   aspect-ratio: 4 / 5;
   border-radius: 28px;
   object-fit: cover;
+  /* Offset coral block behind the photo for depth. */
+  box-shadow: 18px 18px 0 var(--coral);
 }
 
 .hero__monogram {
@@ -61,7 +67,7 @@
   grid-column: 1 / -1;
   margin: 0;
   padding: 0.25rem 0 0.25rem 1.5rem;
-  border-left: 4px solid var(--violet);
+  border-left: 4px solid var(--coral);
 }
 
 .hero__quote-text {
@@ -73,6 +79,24 @@
   font-weight: 500;
   line-height: 1.3;
   color: var(--violet);
+}
+
+/* Quotes live in CSS so SplitText only splits the slogan words. */
+.hero__quote-text::before,
+.hero__quote-text::after {
+  color: var(--coral);
+  font-size: 1.3em;
+  line-height: 0;
+}
+
+.hero__quote-text::before {
+  content: '\201C';
+  margin-right: 0.08em;
+}
+
+.hero__quote-text::after {
+  content: '\201D';
+  margin-left: 0.04em;
 }
 
 @media (max-width: 860px) {

@@ -2,6 +2,9 @@
 :root {
   /* Single brand purple used across the whole site. */
   --violet: #7b2cbf;
+  /* Warm accent used sparingly; --coral-ink is the darker tone for small text (WCAG contrast). */
+  --coral: #ff6b6b;
+  --coral-ink: #d63b42;
   --ink: #141414;
   --ink-soft: #4b4b55;
   --line: #ece6f1;
@@ -50,7 +53,7 @@ img {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--violet);
+  color: var(--coral-ink);
 }
 
 .section__title {

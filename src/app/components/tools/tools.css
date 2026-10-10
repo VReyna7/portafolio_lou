@@ -33,6 +33,11 @@
   color: var(--white);
   background: var(--violet);
   margin-bottom: 0.5rem;
+  transition: background 0.2s ease;
+}
+
+.tool:hover .tool__badge {
+  background: var(--coral);
 }
 
 .tool__name {
