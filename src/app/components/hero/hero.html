@@ -18,10 +18,13 @@
 
   <div class="hero__visual">
     @if (profile().photo) {
-      <img class="hero__photo" [src]="profile().photo" [alt]="profile().name" />
+      <img class="hero__media hero__photo" [src]="profile().photo" [alt]="profile().name" />
     } @else {
-      <div class="hero__monogram" aria-hidden="true">{{ initials() }}</div>
+      <div class="hero__media hero__monogram" aria-hidden="true">{{ initials() }}</div>
     }
-    <blockquote class="bubble">{{ profile().quote }}</blockquote>
   </div>
+
+  <figure class="hero__quote">
+    <blockquote class="hero__quote-text">{{ profile().quote }}</blockquote>
+  </figure>
 </section>

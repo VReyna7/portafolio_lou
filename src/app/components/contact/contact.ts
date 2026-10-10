@@ -1,7 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Injector,
+  afterNextRender,
+  computed,
+  inject,
+  input,
+  signal
+} from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
+import { gsap, prefersReducedMotion } from '../../animations/gsap';
+import { Reveal } from '../../animations/reveal.directive';
 import { ContactSection } from '../../models/site-content';
 
 type SendStatus = 'idle' | 'sending' | 'sent' | 'error';
@@ -14,7 +26,7 @@ const WEB3FORMS_URL = 'https://api.web3forms.com/submit';
  */
 @Component({
   selector: 'app-contact',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Reveal],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -24,6 +36,8 @@ export class Contact {
 
   private readonly http = inject(HttpClient);
   private readonly fb = inject(NonNullableFormBuilder);
+  private readonly host: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly injector = inject(Injector);
 
   protected readonly status = signal<SendStatus>('idle');
   protected readonly isConfigured = computed(() => !!this.contact().web3formsKey);
@@ -66,6 +80,7 @@ export class Contact {
       );
       this.status.set('sent');
       this.form.reset();
+      afterNextRender(() => this.animateSent(), { injector: this.injector });
     } catch {
       this.status.set('error');
     }
@@ -74,5 +89,16 @@ export class Contact {
   protected invalid(field: 'name' | 'email' | 'message'): boolean {
     const control = this.form.controls[field];
     return control.invalid && control.touched;
+  }
+
+  private animateSent(): void {
+    const panel = this.host.querySelector('.contact__done');
+    if (!panel || prefersReducedMotion()) {
+      return;
+    }
+    gsap
+      .timeline({ defaults: { ease: 'back.out(1.6)' } })
+      .from(panel, { scale: 0.9, autoAlpha: 0, duration: 0.5 })
+      .from(panel.children, { y: 14, autoAlpha: 0, stagger: 0.08, duration: 0.4 }, '-=0.2');
   }
 }

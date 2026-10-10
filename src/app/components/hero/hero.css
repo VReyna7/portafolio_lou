@@ -35,7 +35,6 @@
 }
 
 .hero__visual {
-  position: relative;
   display: grid;
   justify-items: center;
 }
@@ -57,20 +56,27 @@
   background: linear-gradient(150deg, var(--violet), var(--violet-dark));
 }
 
-.hero__visual .bubble {
-  position: absolute;
-  bottom: -1.5rem;
-  left: 0;
-  max-width: 260px;
+/* Full-width slogan that closes the hero, below the photo and the summary. */
+.hero__quote {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  border-left: 4px solid var(--violet);
+}
+
+.hero__quote-text {
+  margin: 0;
+  max-width: 880px;
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--violet-dark);
 }
 
 @media (max-width: 860px) {
   .hero {
     grid-template-columns: 1fr;
     min-height: auto;
-  }
-
-  .hero__visual {
-    padding-bottom: 4rem;
   }
 }

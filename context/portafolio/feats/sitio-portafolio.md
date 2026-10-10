@@ -21,7 +21,17 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 - Sin backend: el formulario envía a Web3Forms, que reenvía el mensaje al correo de Lourdes.
 - Los proyectos se abren en un `<dialog>` nativo dentro de la misma página (sin rutas por proyecto). El detalle no tiene formulario ni correo.
 - Las herramientas se muestran con siglas, no con logos oficiales, para no usar marcas registradas.
+- Animaciones con GSAP (ver sección Animaciones).
 - Angular 20 en lugar de la versión más reciente porque el Node local es 22.16 y las versiones nuevas de la CLI piden Node 22.22 o superior.
+
+## Animaciones
+
+- `src/app/animations/gsap.ts`: registra ScrollTrigger y SplitText una sola vez y expone `prefersReducedMotion()`. Si el sistema pide menos movimiento, no se anima nada.
+- `src/app/animations/reveal.directive.ts`: directiva `appReveal` que hace aparecer una sección al entrar en pantalla. Recibe un selector para escalonar sus hijos, por ejemplo `appReveal=".section__title, .card"`. Los proyectos nuevos la heredan sin cambios.
+- Inicio: línea de tiempo de entrada; el eslogan va en cursiva, a todo el ancho debajo de la foto y del resumen, y se revela palabra por palabra.
+- Proyecto: la ventana entra con escala y desplazamiento, luego su contenido en cascada. Al cerrar (botón, clic fuera o Escape) sale animada antes de cerrarse.
+- Contacto: el mensaje de "enviado" aparece con un rebote corto.
+- Los efectos hover usan las propiedades CSS `translate` y `rotate`, no `transform`, para no chocar con GSAP.
 
 ## Cómo agregar un proyecto
 
@@ -59,3 +69,4 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 - Un JSON mal formado (coma faltante) deja el sitio en "Cargando portafolio...". Validar el archivo antes de hacer push (por ejemplo, con el editor o jsonlint).
 - Web3Forms gratuito tiene un límite mensual de envíos; suficiente para un portafolio personal.
 - El `slug` debe ser único porque se usa como clave de la galería.
+- GSAP suma unos 125 kB al paquete inicial (462 kB en total). El aviso de Angular salta en 500 kB; si se agregan más librerías, conviene cargar GSAP en diferido.
