@@ -33,15 +33,15 @@
   font-size: 0.95rem;
 }
 
-.topbar__nav a:hover {
-  color: var(--violet-dark);
+.topbar__nav a:not(.topbar__cta):hover {
+  color: var(--violet);
 }
 
 .topbar__nav .topbar__cta {
   padding: 0.5rem 1rem;
   border-radius: 999px;
   color: var(--white);
-  background: var(--violet-dark);
+  background: var(--violet);
 }
 
 .page {

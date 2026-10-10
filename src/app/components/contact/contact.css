@@ -14,7 +14,7 @@
 
 .contact__direct a:not(.btn) {
   font-weight: 700;
-  color: var(--violet-dark);
+  color: var(--violet);
 }
 
 .contact__form,
@@ -22,7 +22,7 @@
   padding: 2rem;
   border-radius: 24px;
   background: var(--white);
-  box-shadow: 0 16px 40px rgba(110, 46, 160, 0.12);
+  box-shadow: 0 16px 40px rgba(123, 44, 191, 0.12);
 }
 
 .contact__form {

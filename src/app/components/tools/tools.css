@@ -20,7 +20,7 @@
 
 .tool:hover {
   translate: 0 -4px;
-  box-shadow: 0 12px 28px rgba(110, 46, 160, 0.14);
+  box-shadow: 0 12px 28px rgba(123, 44, 191, 0.14);
 }
 
 .tool__badge {

@@ -1,7 +1,7 @@
 /* Shared design tokens and primitives used across all sections. */
 :root {
-  --violet: #c86ae6;
-  --violet-dark: #7b2cbf;
+  /* Single brand purple used across the whole site. */
+  --violet: #7b2cbf;
   --ink: #141414;
   --ink-soft: #4b4b55;
   --line: #ece6f1;
@@ -50,7 +50,7 @@ img {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--violet-dark);
+  color: var(--violet);
 }
 
 .section__title {
@@ -75,7 +75,7 @@ img {
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  border: 2px solid var(--violet-dark);
+  border: 2px solid var(--violet);
   /* `translate` instead of `transform` so hover never conflicts with GSAP tweens. */
   transition: translate 0.2s ease, background 0.2s ease;
 }
@@ -91,11 +91,11 @@ img {
 
 .btn--primary {
   color: var(--white);
-  background: var(--violet-dark);
+  background: var(--violet);
 }
 
 .btn--ghost {
-  color: var(--violet-dark);
+  color: var(--violet);
   background: transparent;
 }
 
