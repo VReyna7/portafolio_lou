@@ -1,0 +1,73 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar__brand {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.topbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.topbar__nav a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.topbar__nav a:hover {
+  color: var(--violet-dark);
+}
+
+.topbar__nav .topbar__cta {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  color: var(--white);
+  background: var(--violet-dark);
+}
+
+.page {
+  border-left: 14px solid var(--violet);
+}
+
+.footer {
+  padding: 2rem;
+  text-align: center;
+  color: var(--white);
+  background: var(--violet);
+}
+
+.loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 680px) {
+  .topbar__nav a:not(.topbar__cta) {
+    display: none;
+  }
+
+  .page {
+    border-left-width: 6px;
+  }
+}

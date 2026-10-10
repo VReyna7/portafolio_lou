@@ -1,0 +1,44 @@
+.tools-grid {
+  list-style: none;
+  padding: 0;
+  margin: 2.5rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 1rem;
+}
+
+.tool {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--white);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tool:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(110, 46, 160, 0.14);
+}
+
+.tool__badge {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  font-weight: 800;
+  color: var(--white);
+  background: var(--violet);
+  margin-bottom: 0.5rem;
+}
+
+.tool__name {
+  font-weight: 700;
+}
+
+.tool__area {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}

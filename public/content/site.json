@@ -1,0 +1,62 @@
+{
+  "profile": {
+    "name": "Lourdes Portales",
+    "headline": "Marketing, estrategia digital y contenido audiovisual",
+    "photo": "",
+    "intro": [
+      "Estrategias digitales pensadas desde la investigación y llevadas a la ejecución.",
+      "Edición de contenido audiovisual que comunica con claridad y personalidad.",
+      "Proyectos donde la creatividad, el análisis y la ejecución trabajan juntos, tanto en punto de venta como en entornos digitales."
+    ],
+    "quote": "Una buena estrategia siempre está acompañada de una buena investigación y un análisis del caso."
+  },
+  "tools": {
+    "title": "Herramientas",
+    "description": "Domino un amplio conjunto de herramientas de diseño, edición, publicidad y gestión de marca que me permiten llevar una idea desde el concepto hasta su publicación.",
+    "items": [
+      { "name": "Illustrator", "short": "Ai", "area": "Diseño vectorial" },
+      { "name": "Photoshop", "short": "Ps", "area": "Edición de imagen" },
+      { "name": "InDesign", "short": "Id", "area": "Diseño editorial" },
+      { "name": "Google Ads", "short": "GA", "area": "Publicidad digital" },
+      { "name": "CapCut", "short": "Cc", "area": "Edición de video" },
+      { "name": "Figma", "short": "Fg", "area": "Diseño de interfaces" },
+      { "name": "Meta Business Suite", "short": "Me", "area": "Gestión de redes" },
+      { "name": "Wix", "short": "Wx", "area": "Sitios web" },
+      { "name": "Canva", "short": "Cv", "area": "Piezas gráficas" }
+    ]
+  },
+  "projects": [
+    {
+      "slug": "editorial-manu",
+      "title": "Editorial Manu",
+      "category": "Marca y branding",
+      "summary": "Creación del nombre, la identidad visual, el manual de uso y los promocionales de una editorial.",
+      "period": "3 meses",
+      "role": "Investigación para la pieza visual, co-diseño del imagotipo y de los elementos visuales de la marca.",
+      "team": [
+        "Oscar Alejandro Barrera Durán",
+        "Lourdes Marcela Portales Cuéllar",
+        "Karla Vanessa Quezada Gómez",
+        "Eimee Marjorie Rosales Esquivel"
+      ],
+      "objective": "Aplicar el proceso creativo para desarrollar una pieza conceptual: crear una marca y su manual de uso, integrando todas las partes del diseño en una pieza gráfica.",
+      "description": "El nombre Editorial Manu rinde homenaje a Aldo Manuzio, escritor y fundador de una de las primeras imprentas del mundo. El nido que acompaña al nombre hace alusión al poema \"El nido\" de Alfredo Espino. El diseño nació de una investigación previa y se acompañó de un manual con lineamientos de diseño gráfico, promocionales, fotografías para redes sociales, un cuento infantil y un stand creativo para su presentación.",
+      "justification": "Toda marca tiene que transmitir un propósito claro con su imagen. Manu se construyó sobre el concepto \"legado de sentimientos\", inspirado en Alfredo Espino \"el poeta niño\" y su único libro, Jícaras tristes. Ese concepto articuló y guió todo el desarrollo visual: una pieza visual auténtica marca la diferencia, conecta con el consumidor y se consolida en su mente.",
+      "driveUrl": "",
+      "accent": "#8a1f2b",
+      "evidence": [
+        { "title": "Imagotipo", "description": "Nombre y nido como sello de la editorial.", "image": "" },
+        { "title": "Promocionales", "description": "Camisetas, separadores y estuche con la identidad aplicada.", "image": "" },
+        { "title": "Carrusel para redes", "description": "Toma de fotografía y edición: \"Porque en Manu los sueños se pueden compartir\".", "image": "" }
+      ]
+    }
+  ],
+  "contact": {
+    "title": "Te apoyo con tu marca",
+    "description": "¿Tienes una marca, un emprendimiento o un proyecto personal? Cuéntame qué necesitas y te ayudo a hacerlo crecer con estrategia y contenido.",
+    "email": "",
+    "whatsapp": "",
+    "web3formsKey": "",
+    "services": ["Estrategia digital", "Contenido audiovisual", "Branding", "Redes sociales", "Otro"]
+  }
+}

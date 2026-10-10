@@ -1,0 +1,27 @@
+<section id="inicio" class="section hero">
+  <div class="hero__text">
+    <p class="eyebrow">Hola!</p>
+    <h1 class="hero__name">Soy {{ profile().name }}</h1>
+    <p class="hero__headline">{{ profile().headline }}</p>
+
+    <ul class="hero__intro">
+      @for (line of profile().intro; track line) {
+        <li>{{ line }}</li>
+      }
+    </ul>
+
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="#proyectos">Ver proyectos</a>
+      <a class="btn btn--ghost" href="#contacto">Trabajemos juntos</a>
+    </div>
+  </div>
+
+  <div class="hero__visual">
+    @if (profile().photo) {
+      <img class="hero__photo" [src]="profile().photo" [alt]="profile().name" />
+    } @else {
+      <div class="hero__monogram" aria-hidden="true">{{ initials() }}</div>
+    }
+    <blockquote class="bubble">{{ profile().quote }}</blockquote>
+  </div>
+</section>

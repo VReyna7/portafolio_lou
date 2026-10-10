@@ -1,0 +1,15 @@
+<section id="herramientas" class="section">
+  <p class="eyebrow">Lo que domino</p>
+  <h2 class="section__title">{{ tools().title }}</h2>
+  <p class="section__lead">{{ tools().description }}</p>
+
+  <ul class="tools-grid">
+    @for (tool of tools().items; track tool.name) {
+      <li class="tool">
+        <span class="tool__badge" aria-hidden="true">{{ tool.short }}</span>
+        <span class="tool__name">{{ tool.name }}</span>
+        <span class="tool__area">{{ tool.area }}</span>
+      </li>
+    }
+  </ul>
+</section>

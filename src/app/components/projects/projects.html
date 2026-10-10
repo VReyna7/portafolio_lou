@@ -1,0 +1,73 @@
+<section id="proyectos" class="section">
+  <p class="eyebrow">Trabajo realizado</p>
+  <h2 class="section__title">Proyectos</h2>
+  <p class="section__lead">
+    Casos donde muestro el proceso: la investigación, las herramientas y el resultado.
+  </p>
+
+  <div class="gallery">
+    @for (project of projects(); track project.slug; let i = $index) {
+      <button
+        type="button"
+        class="card"
+        [style.--accent]="project.accent"
+        (click)="open(project)"
+      >
+        <span class="card__number">{{ number(i) }}</span>
+        <span class="card__category">{{ project.category }}</span>
+        <span class="card__title">{{ project.title }}</span>
+        <span class="card__summary">{{ project.summary }}</span>
+        <span class="card__cta">Ver proyecto</span>
+      </button>
+    }
+  </div>
+</section>
+
+<dialog #dialog class="detail" (click)="onDialogClick($event)" (close)="selected.set(null)">
+  @if (selected(); as project) {
+    <article class="detail__panel" [style.--accent]="project.accent">
+      <button type="button" class="detail__close" aria-label="Cerrar" (click)="close()">×</button>
+
+      <header class="detail__header">
+        <span class="card__category">{{ project.category }}</span>
+        <h3 class="detail__title">{{ project.title }}</h3>
+        <p>{{ project.summary }}</p>
+      </header>
+
+      <dl class="detail__facts">
+        <div><dt>Mi rol</dt><dd>{{ project.role }}</dd></div>
+        <div><dt>Periodo</dt><dd>{{ project.period }}</dd></div>
+        @if (project.team.length) {
+          <div><dt>Equipo</dt><dd>{{ project.team.join(', ') }}</dd></div>
+        }
+      </dl>
+
+      <h4>Objetivo</h4>
+      <p>{{ project.objective }}</p>
+      <h4>El proyecto</h4>
+      <p>{{ project.description }}</p>
+      <h4>Por qué funciona</h4>
+      <p>{{ project.justification }}</p>
+
+      <h4>Evidencias</h4>
+      <div class="evidence">
+        @for (item of project.evidence; track item.title) {
+          <figure class="evidence__item">
+            @if (item.image) {
+              <img [src]="item.image" [alt]="item.title" loading="lazy" />
+            } @else {
+              <div class="evidence__placeholder">{{ item.title }}</div>
+            }
+            <figcaption><strong>{{ item.title }}</strong> {{ item.description }}</figcaption>
+          </figure>
+        }
+      </div>
+
+      @if (project.driveUrl) {
+        <a class="btn btn--primary" [href]="project.driveUrl" target="_blank" rel="noopener">
+          Ver más del proyecto
+        </a>
+      }
+    </article>
+  }
+</dialog>

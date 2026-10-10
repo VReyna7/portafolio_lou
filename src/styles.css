@@ -1,0 +1,119 @@
+/* Shared design tokens and primitives used across all sections. */
+:root {
+  --violet: #c86ae6;
+  --violet-dark: #7b2cbf;
+  --ink: #141414;
+  --ink-soft: #4b4b55;
+  --line: #ece6f1;
+  --paper: #f8f5fb;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.15;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.section {
+  padding: clamp(3.5rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--violet-dark);
+}
+
+.section__title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0.4rem 0 1rem;
+}
+
+.section__lead {
+  max-width: 640px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid var(--violet-dark);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  color: var(--white);
+  background: var(--violet-dark);
+}
+
+.btn--ghost {
+  color: var(--violet-dark);
+  background: transparent;
+}
+
+/* Speech bubble inspired by the original Canva layout. */
+.bubble {
+  position: relative;
+  margin: 0;
+  padding: 1.1rem 1.25rem;
+  font-size: 0.95rem;
+  border: 3px solid var(--violet-dark);
+  border-radius: 20px;
+  background: var(--white);
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  left: 2rem;
+  bottom: -18px;
+  border: 9px solid transparent;
+  border-top-color: var(--violet-dark);
+}

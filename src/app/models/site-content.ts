@@ -1,0 +1,57 @@
+export interface Profile {
+  name: string;
+  headline: string;
+  photo: string;
+  intro: string[];
+  quote: string;
+}
+
+export interface Tool {
+  name: string;
+  short: string;
+  area: string;
+}
+
+export interface ToolsSection {
+  title: string;
+  description: string;
+  items: Tool[];
+}
+
+export interface Evidence {
+  title: string;
+  description: string;
+  image: string;
+}
+
+export interface Project {
+  slug: string;
+  title: string;
+  category: string;
+  summary: string;
+  period: string;
+  role: string;
+  team: string[];
+  objective: string;
+  description: string;
+  justification: string;
+  driveUrl: string;
+  accent: string;
+  evidence: Evidence[];
+}
+
+export interface ContactSection {
+  title: string;
+  description: string;
+  email: string;
+  whatsapp: string;
+  web3formsKey: string;
+  services: string[];
+}
+
+export interface SiteContent {
+  profile: Profile;
+  tools: ToolsSection;
+  projects: Project[];
+  contact: ContactSection;
+}
