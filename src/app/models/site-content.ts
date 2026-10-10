@@ -29,12 +29,9 @@ export interface Project {
   title: string;
   category: string;
   summary: string;
-  period: string;
+  cover: string;
   role: string;
-  team: string[];
-  objective: string;
   description: string;
-  justification: string;
   driveUrl: string;
   accent: string;
   evidence: Evidence[];
