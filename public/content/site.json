@@ -22,7 +22,8 @@
       { "name": "Figma", "short": "Fg", "area": "Diseño de interfaces" },
       { "name": "Meta Business Suite", "short": "Me", "area": "Gestión de redes" },
       { "name": "Wix", "short": "Wx", "area": "Sitios web" },
-      { "name": "Canva", "short": "Cv", "area": "Piezas gráficas" }
+      { "name": "Canva", "short": "Cv", "area": "Piezas gráficas" },
+      { "name": "Microsoft 365", "short": "Ms", "area": "Productividad y ofimática" }
     ]
   },
   "projects": [
