@@ -2,10 +2,9 @@
 :root {
   /* Single brand purple used across the whole site. */
   --violet: #7b2cbf;
-  /* Warm accent used sparingly; --coral-ink is the darker tone for small text (WCAG contrast). */
-  --coral: #ff6b6b;
-  --coral-ink: #d63b42;
+  /* Black is the second brand color: dark bands, outlines and details. */
   --ink: #141414;
+  --ink-raised: #1f1f22;
   --ink-soft: #4b4b55;
   --line: #ece6f1;
   --paper: #f8f5fb;
@@ -48,12 +47,22 @@ img {
 }
 
 .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   margin: 0;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--coral-ink);
+  color: var(--ink);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: var(--violet);
 }
 
 .section__title {
@@ -80,7 +89,7 @@ img {
   cursor: pointer;
   border: 2px solid var(--violet);
   /* `translate` instead of `transform` so hover never conflicts with GSAP tweens. */
-  transition: translate 0.2s ease, background 0.2s ease;
+  transition: translate 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
 .btn:hover:not(:disabled) {
@@ -98,8 +107,14 @@ img {
 }
 
 .btn--ghost {
-  color: var(--violet);
+  color: var(--ink);
+  border-color: var(--ink);
   background: transparent;
+}
+
+.btn--ghost:hover:not(:disabled) {
+  color: var(--white);
+  background: var(--ink);
 }
 
 /* Native ::backdrop cannot be targeted by GSAP, so it fades in with CSS. */

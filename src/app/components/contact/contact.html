@@ -1,7 +1,7 @@
 <section
   id="contacto"
   class="section contact"
-  appReveal=".eyebrow, .section__title, .section__lead, .contact__direct, .contact__form"
+  appReveal=".eyebrow, .section__title, .section__lead, .contact__direct, .contact__photo, .contact__form"
 >
   <div class="contact__intro">
     <p class="eyebrow">Contáctame</p>
@@ -18,6 +18,10 @@
         </a>
       }
     </div>
+
+    @if (contact().photo) {
+      <img class="contact__photo" [src]="contact().photo" alt="Lourdes Portales" loading="lazy" />
+    }
   </div>
 
   @if (status() === 'sent') {

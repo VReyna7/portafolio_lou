@@ -12,6 +12,13 @@
   margin-top: 1.5rem;
 }
 
+/* Cut-out photo, no frame; capped near its native width to stay sharp. */
+.contact__photo {
+  width: min(340px, 100%);
+  height: auto;
+  margin-top: 1.5rem;
+}
+
 .contact__direct a:not(.btn) {
   font-weight: 700;
   color: var(--violet);

@@ -2,7 +2,7 @@
   "profile": {
     "name": "Lourdes Portales",
     "headline": "Marketing, estrategia digital y contenido audiovisual",
-    "photo": "",
+    "photo": "profile/lourdes-perfil.webp",
     "intro": [
       "Estrategias digitales pensadas desde la investigación y llevadas a la ejecución.",
       "Edición de contenido audiovisual que comunica con claridad y personalidad.",
@@ -54,6 +54,7 @@
   "contact": {
     "title": "Te apoyo con tu marca",
     "description": "¿Tienes una marca, un emprendimiento o un proyecto personal? Cuéntame qué necesitas y te ayudo a hacerlo crecer con estrategia y contenido.",
+    "photo": "profile/lourdes-contacto.png",
     "email": "",
     "whatsapp": "",
     "web3formsKey": "",

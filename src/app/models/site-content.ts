@@ -43,6 +43,7 @@ export interface Project {
 export interface ContactSection {
   title: string;
   description: string;
+  photo: string;
   email: string;
   whatsapp: string;
   web3formsKey: string;

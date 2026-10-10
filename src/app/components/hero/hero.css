@@ -29,7 +29,7 @@
 }
 
 .hero__intro li::marker {
-  color: var(--coral);
+  color: var(--violet);
 }
 
 .hero__actions {
@@ -43,17 +43,16 @@
   justify-items: center;
 }
 
-.hero__photo,
+/* Cut-out photo shown as is: no frame, no crop. Capped at its native width to stay sharp. */
+.hero__photo {
+  width: min(420px, 100%);
+  height: auto;
+}
+
 .hero__monogram {
   width: min(320px, 80%);
   aspect-ratio: 4 / 5;
   border-radius: 28px;
-  object-fit: cover;
-  /* Offset coral block behind the photo for depth. */
-  box-shadow: 18px 18px 0 var(--coral);
-}
-
-.hero__monogram {
   display: grid;
   place-items: center;
   font-size: 6rem;
@@ -67,7 +66,7 @@
   grid-column: 1 / -1;
   margin: 0;
   padding: 0.25rem 0 0.25rem 1.5rem;
-  border-left: 4px solid var(--coral);
+  border-left: 4px solid var(--violet);
 }
 
 .hero__quote-text {
@@ -84,7 +83,7 @@
 /* Quotes live in CSS so SplitText only splits the slogan words. */
 .hero__quote-text::before,
 .hero__quote-text::after {
-  color: var(--coral);
+  color: var(--ink);
   font-size: 1.3em;
   line-height: 0;
 }

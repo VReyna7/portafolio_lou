@@ -20,6 +20,7 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 - Todo el contenido vive en `public/content/site.json` y se carga en tiempo de ejecución con `ContentService`. Cambiar textos o agregar proyectos no requiere tocar código.
 - Sin backend: el formulario envía a Web3Forms, que reenvía el mensaje al correo de Lourdes.
 - Los proyectos se abren en un `<dialog>` nativo dentro de la misma página (sin rutas por proyecto). El detalle no tiene formulario ni correo.
+- Paleta: blanco, un solo morado de marca (`--violet`) y negro (`--ink`) como segundo color. Herramientas es una banda negra de ancho completo, el pie de página es negro y los subtítulos llevan una raya morada.
 - Las herramientas se muestran con siglas, no con logos oficiales, para no usar marcas registradas.
 - Animaciones con GSAP (ver sección Animaciones).
 - Angular 20 en lugar de la versión más reciente porque el Node local es 22.16 y las versiones nuevas de la CLI piden Node 22.22 o superior.
@@ -60,7 +61,7 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 
 - `contact.web3formsKey`: crear una clave gratuita en https://web3forms.com con el correo de Lourdes y pegarla aquí. Mientras esté vacía, el formulario muestra "disponible muy pronto" y el botón queda deshabilitado. La clave es pública por diseño; Web3Forms solo envía al correo asociado.
 - `contact.email` y `contact.whatsapp` (formato internacional, por ejemplo `50370000000`): opcionales, se muestran como enlaces directos.
-- `profile.photo`: guardar la foto en `public/profile/lourdes.jpg` y poner `profile/lourdes.jpg`. Sin foto se muestra un monograma.
+- Fotos sin fondo en `public/profile/`: `lourdes-perfil.webp` (inicio, `profile.photo`) y `lourdes-contacto.png` (contacto, `contact.photo`). Se muestran sin marco ni recorte. Son de unos 420 px de ancho; si se reemplazan por versiones más grandes se verán más nítidas en pantallas retina. Si `profile.photo` queda vacío, se muestra un monograma.
 - Imágenes de evidencias de Editorial Manu y `driveUrl`.
 - Conectar el repositorio en Vercel (Add New Project, importar `VReyna7/portafolio_lou`). `vercel.json` ya define build y salida.
 
