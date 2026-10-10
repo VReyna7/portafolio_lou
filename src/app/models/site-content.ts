@@ -26,6 +26,8 @@ export interface Evidence {
   video?: string;
   /** Still frame shown before the video loads. */
   poster?: string;
+  /** Playback speed for the video (1 = normal). */
+  speed?: number;
 }
 
 export interface Project {

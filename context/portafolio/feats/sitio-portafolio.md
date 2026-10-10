@@ -65,6 +65,7 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
   `ffmpeg -i original.mp4 -an -vf "scale=720:-2" -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -movflags +faststart video.mp4`
   y el póster: `ffmpeg -ss 0.5 -i video.mp4 -frames:v 1 -vf "scale=540:-2" -q:v 7 poster.jpg`.
 - El contenedor asume formato vertical (3:4) y un ancho máximo de 360 px.
+- `speed` (opcional) ajusta la velocidad de reproducción sin recodificar; el carrusel de Manu usa `1.5`.
 - Carrusel de Editorial Manu: de 4.8 MB a 604 KB, póster de 65 KB.
 - Tráfico: el plan gratuito de Vercel incluye 100 GB/mes; si se supera, pausa el proyecto en lugar de cobrar. Si hubiera abuso, agregar una regla de rate limit en el firewall de Vercel.
 

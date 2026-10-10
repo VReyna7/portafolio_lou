@@ -40,6 +40,8 @@
                     [controls]="reducedMotion"
                     [attr.aria-label]="item.title"
                     [muted]="true"
+                    [defaultPlaybackRate]="item.speed || 1"
+                    [playbackRate]="item.speed || 1"
                     loop
                     playsinline
                     preload="none"

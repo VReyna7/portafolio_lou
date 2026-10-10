@@ -58,7 +58,8 @@
           "description": "Toma de fotografía y edición: \"Porque en Manu los sueños se pueden compartir\".",
           "image": "",
           "video": "projects/editorial-manu/carrusel.mp4",
-          "poster": "projects/editorial-manu/carrusel-poster.jpg"
+          "poster": "projects/editorial-manu/carrusel-poster.jpg",
+          "speed": 1.5
         }
       ]
     }
