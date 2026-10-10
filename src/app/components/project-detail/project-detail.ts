@@ -8,7 +8,7 @@ import {
   signal,
   viewChild
 } from '@angular/core';
-import { gsap, prefersReducedMotion } from '../../animations/gsap';
+import { ScrollTrigger, gsap, prefersReducedMotion } from '../../animations/gsap';
 import { Project } from '../../models/site-content';
 
 /** Max wait for evidence images before starting scroll animations anyway. */
@@ -26,6 +26,8 @@ const IMAGE_WAIT_MS = 1500;
 })
 export class ProjectDetail {
   protected readonly project = signal<Project | null>(null);
+  /** With reduced motion videos never autoplay; native controls are shown instead. */
+  protected readonly reducedMotion = prefersReducedMotion();
 
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
   private readonly injector = inject(Injector);
@@ -145,6 +147,10 @@ export class ProjectDetail {
 
       dialog.querySelectorAll<HTMLElement>('.step').forEach((step, index) => {
         const fromLeft = index % 2 === 0;
+        const video = step.querySelector('video');
+        if (video) {
+          this.playWhileVisible(video, step, dialog);
+        }
         gsap
           .timeline({
             defaults: { ease: 'power3.out' },
@@ -163,6 +169,25 @@ export class ProjectDetail {
             '-=0.6'
           );
       });
+    });
+  }
+
+  /**
+   * preload="none" means the file is only downloaded on the first play(),
+   * which happens when the step scrolls into view; it pauses when it leaves.
+   */
+  private playWhileVisible(video: HTMLVideoElement, step: HTMLElement, dialog: HTMLDialogElement): void {
+    const play = () => void video.play().catch(() => undefined);
+    const pause = () => video.pause();
+    ScrollTrigger.create({
+      trigger: step,
+      scroller: dialog,
+      start: 'top 85%',
+      end: 'bottom 15%',
+      onEnter: play,
+      onEnterBack: play,
+      onLeave: pause,
+      onLeaveBack: pause
     });
   }
 

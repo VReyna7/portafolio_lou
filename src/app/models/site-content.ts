@@ -22,6 +22,10 @@ export interface Evidence {
   title: string;
   description: string;
   image: string;
+  /** Optional muted, looping clip; takes precedence over `image`. */
+  video?: string;
+  /** Still frame shown before the video loads. */
+  poster?: string;
 }
 
 export interface Project {

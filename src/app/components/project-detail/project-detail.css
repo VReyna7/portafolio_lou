@@ -136,6 +136,21 @@
   scale: 1.04;
 }
 
+/* Portrait clips: narrower and centered so they never fill the whole dialog height. */
+.step__media--video {
+  justify-self: center;
+  width: min(100%, 360px);
+  background: var(--ink);
+}
+
+.step__media video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
 .step__placeholder {
   display: grid;
   place-items: center;

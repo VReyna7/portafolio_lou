@@ -52,17 +52,28 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 | `description` | Texto de "El proyecto". |
 | `driveUrl` | Enlace a más material. Vacío oculta el botón. |
 | `accent` | Color del proyecto en hexadecimal (`#8a1f2b`): tarjeta, banda, números y barra de progreso. |
-| `evidence` | Pasos del proceso, en orden: lista de `title`, `description` e `image`. |
+| `evidence` | Pasos del proceso, en orden: lista de `title`, `description` e `image`. Opcionales: `video` y `poster` (ver Videos). |
 
 4. Para imágenes, guardarlas en `public/projects/<slug>/` y referenciarlas como `projects/<slug>/archivo.jpg`. Si `image` está vacío se muestra un bloque de color con el título.
 5. Commit y push a `main`. Vercel publica en uno o dos minutos.
+
+## Videos
+
+- Se sirven desde el propio sitio (no YouTube): para clips cortos el iframe de YouTube pesa más que el video comprimido y no se puede integrar al diseño.
+- Se reproducen en silencio, en bucle y sin controles. El archivo solo se descarga cuando el paso entra en pantalla dentro de la ficha (`preload="none"` + ScrollTrigger) y se pausa al salir. Con "reducir movimiento" no se reproducen solos y se muestran los controles nativos.
+- Comprimir antes de subir (H.264, sin audio, ~720 px de ancho, `faststart`). Ejemplo con ffmpeg:
+  `ffmpeg -i original.mp4 -an -vf "scale=720:-2" -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -movflags +faststart video.mp4`
+  y el póster: `ffmpeg -ss 0.5 -i video.mp4 -frames:v 1 -vf "scale=540:-2" -q:v 7 poster.jpg`.
+- El contenedor asume formato vertical (3:4) y un ancho máximo de 360 px.
+- Carrusel de Editorial Manu: de 4.8 MB a 604 KB, póster de 65 KB.
+- Tráfico: el plan gratuito de Vercel incluye 100 GB/mes; si se supera, pausa el proyecto en lugar de cobrar. Si hubiera abuso, agregar una regla de rate limit en el firewall de Vercel.
 
 ## Configuración pendiente
 
 - `contact.web3formsKey`: crear una clave gratuita en https://web3forms.com con el correo de Lourdes y pegarla aquí. Mientras esté vacía, el formulario muestra "disponible muy pronto" y el botón queda deshabilitado. La clave es pública por diseño; Web3Forms solo envía al correo asociado.
 - `contact.email` y `contact.whatsapp` (formato internacional, por ejemplo `50370000000`): opcionales, se muestran como enlaces directos.
 - Fotos sin fondo en `public/profile/`: `lourdes-perfil.webp` (inicio, `profile.photo`) y `lourdes-contacto.png` (contacto, `contact.photo`). Se muestran sin marco ni recorte. Son de unos 420 px de ancho; si se reemplazan por versiones más grandes se verán más nítidas en pantallas retina. Si `profile.photo` queda vacío, se muestra un monograma.
-- Editorial Manu: imagen del carrusel para redes (hoy muestra un bloque de color) y `driveUrl`. Las imágenes actuales están en `public/projects/editorial-manu/` (imagotipo, separadores, camisetas).
+- Editorial Manu: `driveUrl`. Los archivos actuales están en `public/projects/editorial-manu/` (imagotipo, separadores, camisetas, video del carrusel y su póster).
 - Conectar el repositorio en Vercel (Add New Project, importar `VReyna7/portafolio_lou`). `vercel.json` ya define build y salida.
 
 ## Riesgos y casos borde

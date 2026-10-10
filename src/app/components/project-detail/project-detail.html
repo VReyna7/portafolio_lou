@@ -32,8 +32,19 @@
         <ol class="steps">
           @for (item of project.evidence; track item.title; let i = $index) {
             <li class="step" [class.step--reverse]="i % 2 === 1">
-              <div class="step__media">
-                @if (item.image) {
+              <div class="step__media" [class.step__media--video]="item.video">
+                @if (item.video) {
+                  <video
+                    [src]="item.video"
+                    [poster]="item.poster || ''"
+                    [controls]="reducedMotion"
+                    [attr.aria-label]="item.title"
+                    [muted]="true"
+                    loop
+                    playsinline
+                    preload="none"
+                  ></video>
+                } @else if (item.image) {
                   <img [src]="item.image" [alt]="item.title" />
                 } @else {
                   <div class="step__placeholder">{{ item.title }}</div>
