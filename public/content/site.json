@@ -150,6 +150,11 @@
           "sound": true
         },
         {
+          "title": "Identidad FUSALMO",
+          "description": "Centros Juveniles Salesianos: Comparte · Sueña · Transforma.",
+          "image": "projects/fusalmo/logo.jpg"
+        },
+        {
           "title": "Conectando talento con oportunidad",
           "description": "Cobertura en vivo de la feria, junto a CRS y la red de jóvenes de FUSALMO.",
           "image": "projects/fusalmo/conectando-talento.jpg"
