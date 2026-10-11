@@ -62,6 +62,81 @@
           "speed": 1.5
         }
       ]
+    },
+    {
+      "slug": "superate-raices",
+      "title": "¡Supérate! Raíces",
+      "category": "Redes sociales y contenido audiovisual",
+      "summary": "Gestión de redes sociales y producción de video para el programa ¡Supérate! de Fundación Raíces.",
+      "cover": "projects/superate/logo.jpg",
+      "role": "Gestión integral de las redes sociales del programa, desde el análisis hasta la publicación.",
+      "tasks": [
+        "Análisis de las redes sociales de la Fundación.",
+        "Creación del calendario de contenido.",
+        "Toma de fotografías y videos.",
+        "Edición de videos en CapCut.",
+        "Diseños creativos para historias y publicaciones.",
+        "Publicación y control por medio de Meta Business Suite."
+      ],
+      "description": "¡Supérate! es un programa de Fundación Raíces que acompaña a jóvenes en su formación académica, en inglés y en valores. El contenido documenta la vida del centro: retos, debates, obras de teatro, celebraciones y charlas, contado en formato vertical para redes sociales.",
+      "driveUrl": "",
+      "accent": "#1b6fa8",
+      "evidence": [
+        {
+          "title": "¿Eres bueno con la lectura?",
+          "description": "Reto dinámico para adivinar libros a partir de emojis, pensado para generar interacción.",
+          "image": "",
+          "video": "projects/superate/lectura.mp4",
+          "poster": "projects/superate/lectura-poster.jpg",
+          "ratio": "9 / 16",
+          "sound": true
+        },
+        {
+          "title": "El inglés se vive",
+          "description": "\"El inglés se vive, se practica y se disfruta\": el aprendizaje del idioma mostrado desde el día a día.",
+          "image": "",
+          "video": "projects/superate/ingles.mp4",
+          "poster": "projects/superate/ingles-poster.jpg",
+          "ratio": "9 / 16",
+          "sound": true
+        },
+        {
+          "title": "Annual Seniors Debate",
+          "description": "Cobertura del debate anual en inglés de la promoción Seniors Class of 2025, como parte del aprendizaje basado en proyectos.",
+          "image": "",
+          "video": "projects/superate/debate.mp4",
+          "poster": "projects/superate/debate-poster.jpg",
+          "ratio": "9 / 16",
+          "sound": true
+        },
+        {
+          "title": "No todo se ve a simple vista",
+          "description": "Promoción de la obra \"Emocionalmente\" junto a Alicia Chong.",
+          "image": "",
+          "video": "projects/superate/obra.mp4",
+          "poster": "projects/superate/obra-poster.jpg",
+          "ratio": "9 / 16",
+          "sound": true
+        },
+        {
+          "title": "Día del Padre",
+          "description": "Registro de la celebración del Día del Padre con la comunidad del programa.",
+          "image": "",
+          "video": "projects/superate/dia-del-padre.mp4",
+          "poster": "projects/superate/dia-del-padre-poster.jpg",
+          "ratio": "9 / 16",
+          "sound": true
+        },
+        {
+          "title": "Charlas de ciberseguridad",
+          "description": "Charlas impartidas por UNODC a estudiantes de primer año sobre seguridad en línea.",
+          "image": "",
+          "video": "projects/superate/ciberseguridad.mp4",
+          "poster": "projects/superate/ciberseguridad-poster.jpg",
+          "ratio": "9 / 16",
+          "sound": true
+        }
+      ]
     }
   ],
   "contact": {

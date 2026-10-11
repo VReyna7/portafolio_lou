@@ -20,6 +20,13 @@
         <section class="detail__block">
           <h4>Mi rol</h4>
           <p>{{ project.role }}</p>
+          @if (project.tasks?.length) {
+            <ul class="detail__tasks">
+              @for (task of project.tasks; track task) {
+                <li>{{ task }}</li>
+              }
+            </ul>
+          }
         </section>
         <section class="detail__block">
           <h4>El proyecto</h4>
@@ -35,17 +42,33 @@
               <div class="step__media" [class.step__media--video]="item.video">
                 @if (item.video) {
                   <video
+                    #clip
                     [src]="item.video"
                     [poster]="item.poster || ''"
                     [controls]="reducedMotion"
                     [attr.aria-label]="item.title"
-                    [muted]="true"
+                    [muted]="audible() !== item.video"
                     [defaultPlaybackRate]="item.speed || 1"
                     [playbackRate]="item.speed || 1"
+                    [style.aspect-ratio]="item.ratio || null"
+                    (contextmenu)="$event.preventDefault()"
+                    controlslist="nodownload noplaybackrate"
+                    disablepictureinpicture
                     loop
                     playsinline
                     preload="none"
                   ></video>
+                  @if (item.sound && !reducedMotion) {
+                    <button
+                      type="button"
+                      class="step__sound"
+                      [attr.aria-pressed]="audible() === item.video"
+                      [attr.aria-label]="audible() === item.video ? 'Silenciar video' : 'Activar sonido'"
+                      (click)="toggleSound(item.video, clip)"
+                    >
+                      {{ audible() === item.video ? 'Silenciar' : 'Activar sonido' }}
+                    </button>
+                  }
                 } @else if (item.image) {
                   <img [src]="item.image" [alt]="item.title" />
                 } @else {

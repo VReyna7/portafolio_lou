@@ -28,6 +28,8 @@ export class ProjectDetail {
   protected readonly project = signal<Project | null>(null);
   /** With reduced motion videos never autoplay; native controls are shown instead. */
   protected readonly reducedMotion = prefersReducedMotion();
+  /** Source of the only clip allowed to play with sound; every other clip stays muted. */
+  protected readonly audible = signal<string | null>(null);
 
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
   private readonly injector = inject(Injector);
@@ -70,6 +72,17 @@ export class ProjectDetail {
   protected onClosed(): void {
     this.reset(this.dialog().nativeElement);
     this.project.set(null);
+    this.audible.set(null);
+  }
+
+  /** The click is a user gesture, so browsers allow playback with sound from here. */
+  protected toggleSound(src: string, video: HTMLVideoElement): void {
+    const enable = this.audible() !== src;
+    this.audible.set(enable ? src : null);
+    if (enable) {
+      video.muted = false;
+      void video.play().catch(() => undefined);
+    }
   }
 
   /** Escape fires `cancel`; route it through close() so it also animates out. */

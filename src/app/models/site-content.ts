@@ -28,6 +28,10 @@ export interface Evidence {
   poster?: string;
   /** Playback speed for the video (1 = normal). */
   speed?: number;
+  /** CSS aspect ratio of the clip, e.g. "9 / 16" for reels (default 3 / 4). */
+  ratio?: string;
+  /** True when the file keeps its audio track; shows a sound toggle (clips always start muted). */
+  sound?: boolean;
 }
 
 export interface Project {
@@ -37,6 +41,8 @@ export interface Project {
   summary: string;
   cover: string;
   role: string;
+  /** Optional list of responsibilities shown under "Mi rol". */
+  tasks?: string[];
   description: string;
   driveUrl: string;
   accent: string;

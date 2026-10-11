@@ -96,6 +96,20 @@
   color: var(--ink-soft);
 }
 
+.detail__tasks {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.detail__tasks li + li {
+  margin-top: 0.3rem;
+}
+
+.detail__tasks li::marker {
+  color: var(--accent);
+}
+
 .detail__steps-title {
   padding: 2.5rem 2.5rem 0;
   font-size: 1.4rem;
@@ -136,11 +150,34 @@
   scale: 1.04;
 }
 
-/* Portrait clips: narrower and centered so they never fill the whole dialog height. */
+/* Portrait clips: narrower and centered; the vh cap keeps 9:16 reels inside short screens. */
 .step__media--video {
+  position: relative;
   justify-self: center;
-  width: min(100%, 360px);
+  width: min(100%, 360px, 40vh);
   background: var(--ink);
+}
+
+.step__sound {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  padding: 0.45rem 0.85rem;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--white);
+  background: rgb(20 20 20 / 0.7);
+  backdrop-filter: blur(4px);
+  transition: background 0.2s ease;
+}
+
+.step__sound:hover,
+.step__sound[aria-pressed='true'] {
+  background: var(--accent);
 }
 
 .step__media video {

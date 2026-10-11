@@ -49,10 +49,11 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 | `summary` | Una o dos líneas para la tarjeta y la banda de título. |
 | `cover` | Imagen de portada de la tarjeta (se muestra completa sobre fondo negro). Vacío la oculta. |
 | `role` | Qué hizo Lourdes ("Mi rol"). |
+| `tasks` | Opcional. Lista de funciones que se muestra con viñetas debajo de `role`. |
 | `description` | Texto de "El proyecto". |
 | `driveUrl` | Enlace a más material. Vacío oculta el botón. |
 | `accent` | Color del proyecto en hexadecimal (`#8a1f2b`): tarjeta, banda, números y barra de progreso. |
-| `evidence` | Pasos del proceso, en orden: lista de `title`, `description` e `image`. Opcionales: `video` y `poster` (ver Videos). |
+| `evidence` | Pasos del proceso, en orden: lista de `title`, `description` e `image`. Opcionales: `video`, `poster`, `speed`, `ratio` y `sound` (ver Videos). |
 
 4. Para imágenes, guardarlas en `public/projects/<slug>/` y referenciarlas como `projects/<slug>/archivo.jpg`. Si `image` está vacío se muestra un bloque de color con el título.
 5. Commit y push a `main`. Vercel publica en uno o dos minutos.
@@ -60,14 +61,24 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 ## Videos
 
 - Se sirven desde el propio sitio (no YouTube): para clips cortos el iframe de YouTube pesa más que el video comprimido y no se puede integrar al diseño.
-- Se reproducen en silencio, en bucle y sin controles. El archivo solo se descarga cuando el paso entra en pantalla dentro de la ficha (`preload="none"` + ScrollTrigger) y se pausa al salir. Con "reducir movimiento" no se reproducen solos y se muestran los controles nativos.
-- Comprimir antes de subir (H.264, sin audio, ~720 px de ancho, `faststart`). Ejemplo con ffmpeg:
+- Siempre arrancan en silencio, en bucle y sin controles. El archivo solo se descarga cuando el paso entra en pantalla dentro de la ficha (`preload="none"` + ScrollTrigger) y se pausa al salir. Con "reducir movimiento" no se reproducen solos y se muestran los controles nativos.
+- `sound: true` muestra el botón "Activar sonido" (solo para archivos que conservan su pista de audio). Solo un video puede sonar a la vez: activar uno silencia el anterior. Al cerrar la ficha todo vuelve a silencio.
+- `ratio` define la proporción del video (`"9 / 16"` para reels). Sin él se usa 3:4. El ancho máximo es 360 px y nunca más de 40vh, para que un reel quepa en pantallas bajas.
+- `speed` ajusta la velocidad sin recodificar; el carrusel de Manu usa `1.5`. No conviene en videos con voz.
+- Comprimir antes de subir (H.264, `faststart`). Sin audio, ~720 px:
   `ffmpeg -i original.mp4 -an -vf "scale=720:-2" -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -movflags +faststart video.mp4`
-  y el póster: `ffmpeg -ss 0.5 -i video.mp4 -frames:v 1 -vf "scale=540:-2" -q:v 7 poster.jpg`.
-- El contenedor asume formato vertical (3:4) y un ancho máximo de 360 px.
-- `speed` (opcional) ajusta la velocidad de reproducción sin recodificar; el carrusel de Manu usa `1.5`.
-- Carrusel de Editorial Manu: de 4.8 MB a 604 KB, póster de 65 KB.
-- Tráfico: el plan gratuito de Vercel incluye 100 GB/mes; si se supera, pausa el proyecto en lugar de cobrar. Si hubiera abuso, agregar una regla de rate limit en el firewall de Vercel.
+  Reels con audio (como Supérate), 540 px y audio mono liviano:
+  `ffmpeg -i original.mp4 -vf "scale=540:-2" -c:v libx264 -preset slow -crf 28 -pix_fmt yuv420p -c:a aac -b:a 64k -ac 1 -movflags +faststart video.mp4`
+  Póster: `ffmpeg -ss 1.5 -i original.mp4 -frames:v 1 -vf "scale=540:-2" -q:v 7 poster.jpg`.
+- Carrusel de Editorial Manu: de 4.8 MB a 604 KB. Seis reels de Supérate: de ~52 MB a ~21 MB (2.2 a 6 MB cada uno).
+- Freno a descargas: menú contextual desactivado y `controlslist="nodownload"`. Es solo disuasivo (cualquier archivo público se puede descargar); la protección real es el rate limit del firewall.
+
+## Firewall (rate limit de videos)
+
+- Regla "Rate limit videos" en Vercel: rutas que terminan en `.mp4`, 120 peticiones por IP cada 60 s. Una visita normal que ve los 6 reels hace ~20 peticiones (el navegador pide por rangos).
+- Estado: preparada en modo `log` (solo registra, no bloquea). Para activarla: `vercel firewall publish --yes`.
+- Plan: revisar el tráfico unos días en el panel de Firewall de Vercel; si no hay falsos positivos, cambiar la acción a `deny` (o `rate_limit`). El tráfico bloqueado por el firewall no se cobra.
+- Tráfico: el plan gratuito de Vercel incluye 100 GB/mes; si se supera, pausa el proyecto en lugar de cobrar.
 
 ## Configuración pendiente
 
@@ -75,6 +86,7 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 - `contact.email` y `contact.whatsapp` (formato internacional, por ejemplo `50370000000`): opcionales, se muestran como enlaces directos.
 - Fotos sin fondo en `public/profile/`: `lourdes-perfil.webp` (inicio, `profile.photo`) y `lourdes-contacto.png` (contacto, `contact.photo`). Se muestran sin marco ni recorte. Son de unos 420 px de ancho; si se reemplazan por versiones más grandes se verán más nítidas en pantallas retina. Si `profile.photo` queda vacío, se muestra un monograma.
 - Editorial Manu: `driveUrl`. Los archivos actuales están en `public/projects/editorial-manu/` (imagotipo, separadores, camisetas, video del carrusel y su póster).
+- ¡Supérate! Raíces: `driveUrl`. Archivos en `public/projects/superate/` (logo, 6 reels y sus pósters). Las descripciones de cada video se pueden afinar con Lourdes.
 - Conectar el repositorio en Vercel (Add New Project, importar `VReyna7/portafolio_lou`). `vercel.json` ya define build y salida.
 
 ## Riesgos y casos borde
