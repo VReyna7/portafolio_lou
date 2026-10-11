@@ -48,6 +48,7 @@
                     [controls]="reducedMotion"
                     [attr.aria-label]="item.title"
                     [muted]="audible() !== item.video"
+                    [volume]="volume()"
                     [defaultPlaybackRate]="item.speed || 1"
                     [playbackRate]="item.speed || 1"
                     [style.aspect-ratio]="item.ratio || null"
@@ -59,15 +60,43 @@
                     preload="none"
                   ></video>
                   @if (item.sound && !reducedMotion) {
-                    <button
-                      type="button"
-                      class="step__sound"
-                      [attr.aria-pressed]="audible() === item.video"
-                      [attr.aria-label]="audible() === item.video ? 'Silenciar video' : 'Activar sonido'"
-                      (click)="toggleSound(item.video, clip)"
-                    >
-                      {{ audible() === item.video ? 'Silenciar' : 'Activar sonido' }}
-                    </button>
+                    <div class="step__controls">
+                      <button type="button" class="step__control" aria-label="Reiniciar video" (click)="restart(clip)">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M3 12a9 9 0 1 0 3-6.7" />
+                          <path d="M3 4v5h5" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        class="step__control"
+                        [attr.aria-pressed]="audible() === item.video"
+                        [attr.aria-label]="audible() === item.video ? 'Silenciar video' : 'Activar sonido'"
+                        (click)="toggleSound(item.video, clip)"
+                      >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4 9h4l5-4v14l-5-4H4z" />
+                          @if (audible() === item.video) {
+                            <path d="M16.5 8.5a5 5 0 0 1 0 7" />
+                            <path d="M19 6a8.5 8.5 0 0 1 0 12" />
+                          } @else {
+                            <path d="M17 9l5 6M22 9l-5 6" />
+                          }
+                        </svg>
+                      </button>
+                      @if (audible() === item.video) {
+                        <input
+                          type="range"
+                          class="step__volume"
+                          min="0"
+                          max="1"
+                          step="0.05"
+                          aria-label="Volumen"
+                          [value]="volume()"
+                          (input)="setVolume($event)"
+                        />
+                      }
+                    </div>
                   }
                 } @else if (item.image) {
                   <img [src]="item.image" [alt]="item.title" />

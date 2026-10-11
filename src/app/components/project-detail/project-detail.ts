@@ -30,6 +30,8 @@ export class ProjectDetail {
   protected readonly reducedMotion = prefersReducedMotion();
   /** Source of the only clip allowed to play with sound; every other clip stays muted. */
   protected readonly audible = signal<string | null>(null);
+  /** Shared volume (0-1); only the audible clip is heard, so one value is enough. */
+  protected readonly volume = signal(0.8);
 
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
   private readonly injector = inject(Injector);
@@ -83,6 +85,15 @@ export class ProjectDetail {
       video.muted = false;
       void video.play().catch(() => undefined);
     }
+  }
+
+  protected setVolume(event: Event): void {
+    this.volume.set(Number((event.target as HTMLInputElement).value));
+  }
+
+  protected restart(video: HTMLVideoElement): void {
+    video.currentTime = 0;
+    void video.play().catch(() => undefined);
   }
 
   /** Escape fires `cancel`; route it through close() so it also animates out. */

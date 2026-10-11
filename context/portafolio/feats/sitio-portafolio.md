@@ -62,7 +62,8 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 
 - Se sirven desde el propio sitio (no YouTube): para clips cortos el iframe de YouTube pesa más que el video comprimido y no se puede integrar al diseño.
 - Siempre arrancan en silencio, en bucle y sin controles. El archivo solo se descarga cuando el paso entra en pantalla dentro de la ficha (`preload="none"` + ScrollTrigger) y se pausa al salir. Con "reducir movimiento" no se reproducen solos y se muestran los controles nativos.
-- `sound: true` muestra el botón "Activar sonido" (solo para archivos que conservan su pista de audio). Solo un video puede sonar a la vez: activar uno silencia el anterior. Al cerrar la ficha todo vuelve a silencio.
+- `sound: true` muestra una barra mínima de controles (solo para archivos que conservan su pista de audio): reiniciar, activar/silenciar y, mientras el video suena, un deslizador de volumen (inicia en 80 %, compartido entre videos). Solo un video puede sonar a la vez: activar uno silencia el anterior. Al cerrar la ficha todo vuelve a silencio.
+- En iPhone/iPad Safari no permite cambiar `volume` desde la página (se controla con los botones físicos); el deslizador no tiene efecto ahí, pero silenciar y reiniciar sí funcionan.
 - `ratio` define la proporción del video (`"9 / 16"` para reels). Sin él se usa 3:4. El ancho máximo es 360 px y nunca más de 40vh, para que un reel quepa en pantallas bajas.
 - `speed` ajusta la velocidad sin recodificar; el carrusel de Manu usa `1.5`. No conviene en videos con voz.
 - Comprimir antes de subir (H.264, `faststart`). Sin audio, ~720 px:
