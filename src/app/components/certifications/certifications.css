@@ -49,16 +49,21 @@
   rotate: 3deg;
 }
 
-.diploma__paper:hover,
-.diploma__paper:focus-visible {
+/* Same specificity as the even-tilt rule and declared after it, so hover wins for every diploma. */
+.diploma .diploma__paper:hover,
+.diploma .diploma__paper:focus-visible {
   rotate: 0deg;
   scale: 1.04;
   box-shadow: 0 28px 60px rgba(123, 44, 191, 0.22), 0 4px 10px rgba(20, 20, 20, 0.08);
 }
 
+/* Uniform thumbnails regardless of each scan's ratio; the viewer still shows the full image.
+   The crop leans to the bottom, where diplomas usually have the most empty space. */
 .diploma__paper img {
   width: 100%;
-  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: 50% 15%;
 }
 
 .diploma__title {
@@ -74,7 +79,7 @@
 
 /* Paper mock-up shown until the real scan is added. */
 .mock {
-  aspect-ratio: 1.414 / 1;
+  aspect-ratio: 3 / 2;
   padding: 0.9rem;
   background: var(--white);
 }
@@ -136,7 +141,7 @@
 
 /* Height-capped so a landscape diploma plus its caption fit without scrolling. */
 .viewer__paper .mock {
-  width: min(100%, calc(74vh * 1.414));
+  width: min(100%, calc(74vh * 1.5));
   margin: 0 auto;
 }
 
