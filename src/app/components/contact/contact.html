@@ -1,123 +1,126 @@
 <section
   id="contacto"
   class="section contact"
-  appReveal=".eyebrow, .section__title, .section__lead, .contact__direct, .contact__photo, .contact__form"
+  appReveal=".eyebrow, .section__title, .section__lead, .contact__direct, .contact__photo, .contact__form, .contact__social"
 >
   <div class="contact__intro">
     <p class="eyebrow">Contáctame</p>
     <h2 class="section__title">{{ contact().title }}</h2>
     <p class="section__lead">{{ contact().description }}</p>
 
-    <div class="contact__direct">
-      @if (contact().linkedin || contact().email) {
-        <ul class="contact__social">
-          @if (contact().linkedin) {
-            <li>
-              <a [href]="contact().linkedin" target="_blank" rel="noopener" aria-label="LinkedIn de Lourdes Portales">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"
-                  />
-                </svg>
-                <span>LinkedIn</span>
-              </a>
-            </li>
-          }
-          @if (contact().email) {
-            <li>
-              <a [href]="'mailto:' + contact().email" aria-label="Enviar correo a Lourdes Portales">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.3V17h16V7.3l-8 5.6-8-5.6zM5.6 7l6.4 4.5L18.4 7H5.6z"
-                  />
-                </svg>
-                <span>{{ contact().email }}</span>
-              </a>
-            </li>
-          }
-        </ul>
-      }
-      @if (whatsappUrl()) {
+    @if (whatsappUrl()) {
+      <div class="contact__direct">
         <a class="btn btn--ghost" [href]="whatsappUrl()" target="_blank" rel="noopener">
           Escríbeme por WhatsApp
         </a>
-      }
-    </div>
+      </div>
+    }
 
     @if (contact().photo) {
       <img class="contact__photo" [src]="contact().photo" alt="Lourdes Portales" loading="lazy" />
     }
   </div>
 
-  @if (status() === 'sent') {
-    <div class="contact__done" role="status">
-      <h3>¡Mensaje enviado!</h3>
-      <p>Gracias por escribirme. Te responderé pronto.</p>
-      <button type="button" class="btn btn--ghost" (click)="status.set('idle')">
-        Enviar otro mensaje
-      </button>
-    </div>
-  } @else {
-    <form class="contact__form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
-      <label>
-        Tu nombre
-        <input type="text" formControlName="name" autocomplete="name" />
-        @if (invalid('name')) {
-          <small>Escribe tu nombre.</small>
-        }
-      </label>
-
-      <label>
-        Tu correo
-        <input type="email" formControlName="email" autocomplete="email" />
-        @if (invalid('email')) {
-          <small>Escribe un correo válido.</small>
-        }
-      </label>
-
-      <label>
-        Tu marca o proyecto
-        <input type="text" formControlName="brand" placeholder="Opcional" />
-      </label>
-
-      <label>
-        ¿En qué te apoyo?
-        <select formControlName="service">
-          <option value="">Selecciona una opción</option>
-          @for (service of contact().services; track service) {
-            <option [value]="service">{{ service }}</option>
+  <div class="contact__side">
+    @if (status() === 'sent') {
+      <div class="contact__done" role="status">
+        <h3>¡Mensaje enviado!</h3>
+        <p>Gracias por escribirme. Te responderé pronto.</p>
+        <button type="button" class="btn btn--ghost" (click)="status.set('idle')">
+          Enviar otro mensaje
+        </button>
+      </div>
+    } @else {
+      <form class="contact__form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <label>
+          Tu nombre
+          <input type="text" formControlName="name" autocomplete="name" />
+          @if (invalid('name')) {
+            <small>Escribe tu nombre.</small>
           }
-        </select>
-      </label>
+        </label>
 
-      <label class="contact__full">
-        Cuéntame sobre tu marca
-        <textarea formControlName="message" rows="5"></textarea>
-        @if (invalid('message')) {
-          <small>Cuéntame un poco más (mínimo 10 caracteres).</small>
+        <label>
+          Tu correo
+          <input type="email" formControlName="email" autocomplete="email" />
+          @if (invalid('email')) {
+            <small>Escribe un correo válido.</small>
+          }
+        </label>
+
+        <label>
+          Tu marca o proyecto
+          <input type="text" formControlName="brand" placeholder="Opcional" />
+        </label>
+
+        <label>
+          ¿En qué te apoyo?
+          <select formControlName="service">
+            <option value="">Selecciona una opción</option>
+            @for (service of contact().services; track service) {
+              <option [value]="service">{{ service }}</option>
+            }
+          </select>
+        </label>
+
+        <label class="contact__full">
+          Cuéntame sobre tu marca
+          <textarea formControlName="message" rows="5"></textarea>
+          @if (invalid('message')) {
+            <small>Cuéntame un poco más (mínimo 10 caracteres).</small>
+          }
+        </label>
+
+        <input type="checkbox" formControlName="botcheck" class="contact__honeypot" tabindex="-1" />
+
+        @if (!isConfigured()) {
+          <p class="contact__notice contact__full">
+            El formulario estará disponible muy pronto.
+          </p>
         }
-      </label>
+        @if (status() === 'error') {
+          <p class="contact__notice contact__full">
+            No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.
+          </p>
+        }
 
-      <input type="checkbox" formControlName="botcheck" class="contact__honeypot" tabindex="-1" />
+        <button
+          type="submit"
+          class="btn btn--primary contact__full"
+          [disabled]="status() === 'sending' || !isConfigured()"
+        >
+          {{ status() === 'sending' ? 'Enviando...' : 'Enviar mensaje' }}
+        </button>
+      </form>
+    }
 
-      @if (!isConfigured()) {
-        <p class="contact__notice contact__full">
-          El formulario estará disponible muy pronto.
-        </p>
-      }
-      @if (status() === 'error') {
-        <p class="contact__notice contact__full">
-          No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.
-        </p>
-      }
-
-      <button
-        type="submit"
-        class="btn btn--primary contact__full"
-        [disabled]="status() === 'sending' || !isConfigured()"
-      >
-        {{ status() === 'sending' ? 'Enviando...' : 'Enviar mensaje' }}
-      </button>
-    </form>
-  }
+    @if (contact().linkedin || contact().email) {
+      <ul class="contact__social">
+        @if (contact().linkedin) {
+          <li>
+            <a [href]="contact().linkedin" target="_blank" rel="noopener" aria-label="LinkedIn de Lourdes Portales">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"
+                />
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+          </li>
+        }
+        @if (contact().email) {
+          <li>
+            <a [href]="'mailto:' + contact().email" aria-label="Enviar correo a Lourdes Portales">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.3V17h16V7.3l-8 5.6-8-5.6zM5.6 7l6.4 4.5L18.4 7H5.6z"
+                />
+              </svg>
+              <span>{{ contact().email }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  </div>
 </section>
