@@ -84,7 +84,7 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 ## Configuración pendiente
 
 - `contact.web3formsKey`: crear una clave gratuita en https://web3forms.com con el correo de Lourdes y pegarla aquí. Mientras esté vacía, el formulario muestra "disponible muy pronto" y el botón queda deshabilitado. La clave es pública por diseño; Web3Forms solo envía al correo asociado.
-- `contact.linkedin` y `contact.email`: configurados (LinkedIn sin parámetros de rastreo `utm_*`). Se muestran como botones con ícono, centrados debajo del formulario.
+- `contact.linkedin` y `contact.email`: configurados (LinkedIn sin parámetros de rastreo `utm_*`). Se muestran como botones con ícono, centrados debajo del formulario. El botón del correo copia la dirección al portapapeles y muestra "¡Correo copiado!" por 2 s; si el navegador bloquea el portapapeles, abre la app de correo (`mailto:`).
 - `contact.whatsapp` (formato internacional, por ejemplo `50370000000`): opcionales, se muestran como enlaces directos.
 - Fotos sin fondo en `public/profile/`: `lourdes-perfil.webp` (inicio, `profile.photo`) y `lourdes-contacto.png` (contacto, `contact.photo`). Se muestran sin marco ni recorte. Son de unos 420 px de ancho; si se reemplazan por versiones más grandes se verán más nítidas en pantallas retina. Si `profile.photo` queda vacío, se muestra un monograma.
 - Editorial Manu: `driveUrl`. Los archivos actuales están en `public/projects/editorial-manu/` (imagotipo, separadores, camisetas, video del carrusel y su póster).

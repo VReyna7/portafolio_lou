@@ -36,8 +36,12 @@
   list-style: none;
 }
 
-.contact__social a {
+.contact__social a,
+.contact__social button {
   display: inline-flex;
+  font-family: inherit;
+  background: transparent;
+  cursor: pointer;
   align-items: center;
   gap: 0.6rem;
   padding: 0.55rem 1rem 0.55rem 0.6rem;
@@ -60,12 +64,33 @@
   transition: background 0.2s ease;
 }
 
-.contact__social a:hover {
+.contact__social a:hover,
+.contact__social button:hover {
   border-color: var(--ink);
 }
 
-.contact__social a:hover svg {
+.contact__social a:hover svg,
+.contact__social button:hover svg {
   background: var(--ink);
+}
+
+/* Both labels share one cell so the button keeps the email's width while showing feedback. */
+.contact__copy {
+  display: grid;
+}
+
+.contact__copy > span {
+  grid-area: 1 / 1;
+  text-align: center;
+}
+
+.contact__copy > .is-hidden {
+  visibility: hidden;
+}
+
+.contact__social button.is-copied {
+  border-color: var(--violet);
+  color: var(--violet);
 }
 
 .contact__form,

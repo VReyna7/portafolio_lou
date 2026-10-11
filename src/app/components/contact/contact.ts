@@ -19,6 +19,7 @@ import { ContactSection } from '../../models/site-content';
 type SendStatus = 'idle' | 'sending' | 'sent' | 'error';
 
 const WEB3FORMS_URL = 'https://api.web3forms.com/submit';
+const COPIED_FEEDBACK_MS = 2000;
 
 /**
  * Lets brands or people reach Lourdes. Messages are delivered to her inbox
@@ -40,6 +41,8 @@ export class Contact {
   private readonly injector = inject(Injector);
 
   protected readonly status = signal<SendStatus>('idle');
+  protected readonly copied = signal(false);
+  private copiedTimer?: ReturnType<typeof setTimeout>;
   protected readonly isConfigured = computed(() => !!this.contact().web3formsKey);
   protected readonly whatsappUrl = computed(() => {
     const digits = this.contact().whatsapp.replace(/\D/g, '');
@@ -84,6 +87,20 @@ export class Contact {
     } catch {
       this.status.set('error');
     }
+  }
+
+  /** Copies the address; if the Clipboard API is unavailable, falls back to the mail app. */
+  protected async copyEmail(): Promise<void> {
+    const email = this.contact().email;
+    try {
+      await navigator.clipboard.writeText(email);
+    } catch {
+      window.location.href = `mailto:${email}`;
+      return;
+    }
+    this.copied.set(true);
+    clearTimeout(this.copiedTimer);
+    this.copiedTimer = setTimeout(() => this.copied.set(false), COPIED_FEEDBACK_MS);
   }
 
   protected invalid(field: 'name' | 'email' | 'message'): boolean {
