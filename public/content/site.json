@@ -83,24 +83,6 @@
       "accent": "#1b6fa8",
       "evidence": [
         {
-          "title": "¿Eres bueno con la lectura?",
-          "description": "Reto dinámico para adivinar libros a partir de emojis, pensado para generar interacción.",
-          "image": "",
-          "video": "projects/superate/lectura.mp4",
-          "poster": "projects/superate/lectura-poster.jpg",
-          "ratio": "9 / 16",
-          "sound": true
-        },
-        {
-          "title": "El aprendizaje es divertido",
-          "description": "\"El inglés se vive, se practica y se disfruta\": el aprendizaje del idioma mostrado desde el día a día.",
-          "image": "",
-          "video": "projects/superate/ingles.mp4",
-          "poster": "projects/superate/ingles-poster.jpg",
-          "ratio": "9 / 16",
-          "sound": true
-        },
-        {
           "title": "Annual Seniors Debate",
           "description": "Cobertura del debate anual en inglés de la promoción Seniors Class of 2025, como parte del aprendizaje basado en proyectos.",
           "image": "",

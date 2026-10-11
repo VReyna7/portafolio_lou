@@ -71,12 +71,12 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
   Reels con audio (como Supérate), 540 px y audio mono liviano:
   `ffmpeg -i original.mp4 -vf "scale=540:-2" -c:v libx264 -preset slow -crf 28 -pix_fmt yuv420p -c:a aac -b:a 64k -ac 1 -movflags +faststart video.mp4`
   Póster: `ffmpeg -ss 1.5 -i original.mp4 -frames:v 1 -vf "scale=540:-2" -q:v 7 poster.jpg`.
-- Carrusel de Editorial Manu: de 4.8 MB a 604 KB. Seis reels de Supérate: de ~52 MB a ~21 MB (2.2 a 6 MB cada uno).
+- Carrusel de Editorial Manu: de 4.8 MB a 604 KB. Reels de Supérate: 4 publicados (~11.4 MB en total, 2.2 a 3.6 MB cada uno); los de lectura e inglés se retiraron por decisión de Lourdes.
 - Freno a descargas: menú contextual desactivado y `controlslist="nodownload"`. Es solo disuasivo (cualquier archivo público se puede descargar); la protección real es el rate limit del firewall.
 
 ## Firewall (rate limit de videos)
 
-- Regla "Rate limit videos" en Vercel: rutas que terminan en `.mp4`, 120 peticiones por IP cada 60 s. Una visita normal que ve los 6 reels hace ~20 peticiones (el navegador pide por rangos).
+- Regla "Rate limit videos" en Vercel: rutas que terminan en `.mp4`, 120 peticiones por IP cada 60 s. Una visita normal que ve los 4 reels hace ~15 peticiones (el navegador pide por rangos).
 - Estado: preparada en modo `log` (solo registra, no bloquea). Para activarla: `vercel firewall publish --yes`.
 - Plan: revisar el tráfico unos días en el panel de Firewall de Vercel; si no hay falsos positivos, cambiar la acción a `deny` (o `rate_limit`). El tráfico bloqueado por el firewall no se cobra.
 - Tráfico: el plan gratuito de Vercel incluye 100 GB/mes; si se supera, pausa el proyecto en lugar de cobrar.
@@ -87,7 +87,7 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 - `contact.email` y `contact.whatsapp` (formato internacional, por ejemplo `50370000000`): opcionales, se muestran como enlaces directos.
 - Fotos sin fondo en `public/profile/`: `lourdes-perfil.webp` (inicio, `profile.photo`) y `lourdes-contacto.png` (contacto, `contact.photo`). Se muestran sin marco ni recorte. Son de unos 420 px de ancho; si se reemplazan por versiones más grandes se verán más nítidas en pantallas retina. Si `profile.photo` queda vacío, se muestra un monograma.
 - Editorial Manu: `driveUrl`. Los archivos actuales están en `public/projects/editorial-manu/` (imagotipo, separadores, camisetas, video del carrusel y su póster).
-- ¡Supérate! Raíces: `driveUrl`. Archivos en `public/projects/superate/` (logo, 6 reels y sus pósters). Las descripciones de cada video se pueden afinar con Lourdes.
+- ¡Supérate! Raíces: `driveUrl`. Archivos en `public/projects/superate/` (logo, 4 reels y sus pósters). Las descripciones de cada video se pueden afinar con Lourdes.
 - Conectar el repositorio en Vercel (Add New Project, importar `VReyna7/portafolio_lou`). `vercel.json` ya define build y salida.
 
 ## Riesgos y casos borde
