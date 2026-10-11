@@ -89,6 +89,7 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 - Fotos sin fondo en `public/profile/`: `lourdes-perfil.webp` (inicio, `profile.photo`) y `lourdes-contacto.png` (contacto, `contact.photo`). Se muestran sin marco ni recorte. Son de unos 420 px de ancho; si se reemplazan por versiones más grandes se verán más nítidas en pantallas retina. Si `profile.photo` queda vacío, se muestra un monograma.
 - Editorial Manu: `driveUrl`. Los archivos actuales están en `public/projects/editorial-manu/` (imagotipo, separadores, camisetas, video del carrusel y su póster).
 - ¡Supérate! Raíces: `driveUrl`. Archivos en `public/projects/superate/` (logo, 4 reels y sus pósters). Las descripciones de cada video se pueden afinar con Lourdes.
+- Comunicaciones FUSALMO: `driveUrl`. Archivos en `public/projects/fusalmo/` (logo, video de la feria con audio, póster y foto de cobertura). El video va primero en las evidencias.
 - Conectar el repositorio en Vercel (Add New Project, importar `VReyna7/portafolio_lou`). `vercel.json` ya define build y salida.
 
 ## Riesgos y casos borde

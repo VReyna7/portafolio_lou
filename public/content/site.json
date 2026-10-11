@@ -119,6 +119,47 @@
           "sound": true
         }
       ]
+    },
+    {
+      "slug": "comunicaciones-fusalmo",
+      "title": "Comunicaciones FUSALMO",
+      "category": "Comunicación y eventos",
+      "summary": "Apoyo en comunicación, contenido y difusión de eventos para la Fundación Salvador del Mundo.",
+      "cover": "projects/fusalmo/logo.jpg",
+      "role": "Apoyo en comunicación institucional y en la cobertura de eventos con jóvenes y empresas.",
+      "tasks": [
+        "Redacción de mensajes de invitación.",
+        "Redacción de notas de prensa y guiones.",
+        "Atención al cliente por WhatsApp.",
+        "Apoyo en difusión de eventos.",
+        "Apoyo en creación de contenido.",
+        "Creación de lineamientos empresariales para estrategia comunicativa de atención al usuario en WhatsApp.",
+        "Entrevistas a participantes y empresas en eventos."
+      ],
+      "description": "FUSALMO (Fundación Salvador del Mundo) acompaña a jóvenes a través de centros juveniles salesianos. El trabajo de comunicaciones conecta talento con oportunidad: difusión de ferias, notas de prensa, guiones, atención por WhatsApp y cobertura audiovisual de los eventos.",
+      "driveUrl": "",
+      "accent": "#0b3d91",
+      "evidence": [
+        {
+          "title": "Feria de oportunidades",
+          "description": "Video de la feria que conecta a jóvenes con empresas y oportunidades formativas.",
+          "image": "",
+          "video": "projects/fusalmo/feria-oportunidades.mp4",
+          "poster": "projects/fusalmo/feria-oportunidades-poster.jpg",
+          "ratio": "9 / 16",
+          "sound": true
+        },
+        {
+          "title": "Identidad FUSALMO",
+          "description": "Centros Juveniles Salesianos: Comparte · Sueña · Transforma.",
+          "image": "projects/fusalmo/logo.jpg"
+        },
+        {
+          "title": "Conectando talento con oportunidad",
+          "description": "Cobertura en vivo de la feria, junto a CRS y la red de jóvenes de FUSALMO.",
+          "image": "projects/fusalmo/conectando-talento.jpg"
+        }
+      ]
     }
   ],
   "contact": {
