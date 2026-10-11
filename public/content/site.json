@@ -146,6 +146,12 @@
         "issuer": "Universidad Don Bosco",
         "year": "2026",
         "image": "certifications/udb-casas.jpg"
+      },
+      {
+        "title": "Microsoft Office Specialist: Excel 2016",
+        "issuer": "Microsoft",
+        "year": "2021",
+        "image": "certifications/microsoft-excel-2016.jpg"
       }
     ]
   }
