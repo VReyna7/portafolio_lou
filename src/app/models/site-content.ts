@@ -54,6 +54,8 @@ export interface ContactSection {
   description: string;
   photo: string;
   email: string;
+  /** Public profile URL; empty hides the link. */
+  linkedin: string;
   whatsapp: string;
   web3formsKey: string;
   services: string[];
