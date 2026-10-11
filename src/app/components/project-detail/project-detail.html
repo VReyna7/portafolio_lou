@@ -16,7 +16,7 @@
         <p class="detail__summary">{{ project.summary }}</p>
       </header>
 
-      <div class="detail__blocks">
+      <div class="detail__blocks" [class.detail__blocks--tasks]="project.tasks?.length">
         <section class="detail__block">
           <h4>Mi rol</h4>
           <p>{{ project.role }}</p>
