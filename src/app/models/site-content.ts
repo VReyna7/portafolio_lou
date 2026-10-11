@@ -61,9 +61,25 @@ export interface ContactSection {
   services: string[];
 }
 
+export interface Certification {
+  title: string;
+  issuer: string;
+  year?: string;
+  /** Scan or photo of the diploma; empty renders a styled paper mock-up. */
+  image: string;
+}
+
+export interface CertificationsSection {
+  title: string;
+  description: string;
+  items: Certification[];
+}
+
 export interface SiteContent {
   profile: Profile;
   tools: ToolsSection;
   projects: Project[];
   contact: ContactSection;
+  /** Optional closing section; hidden when missing or empty. */
+  certifications?: CertificationsSection;
 }

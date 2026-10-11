@@ -130,5 +130,23 @@
     "whatsapp": "",
     "web3formsKey": "",
     "services": ["Estrategia digital", "Contenido audiovisual", "Branding", "Redes sociales", "Otro"]
+  },
+  "certifications": {
+    "title": "Diplomados y certificaciones",
+    "description": "Formación complementaria que respalda mi trabajo en marketing y comunicación.",
+    "items": [
+      {
+        "title": "Marketing Digital con herramientas de Meta",
+        "issuer": "Meta y Ministerio de Economía",
+        "year": "2024",
+        "image": "certifications/meta-marketing-digital.jpg"
+      },
+      {
+        "title": "Certificación de inglés CASAS",
+        "issuer": "Universidad Don Bosco",
+        "year": "2026",
+        "image": "certifications/udb-casas.jpg"
+      }
+    ]
   }
 }

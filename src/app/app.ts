@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Certifications } from './components/certifications/certifications';
 import { Contact } from './components/contact/contact';
 import { Hero } from './components/hero/hero';
 import { Projects } from './components/projects/projects';
@@ -7,7 +8,7 @@ import { ContentService } from './services/content.service';
 
 @Component({
   selector: 'app-root',
-  imports: [Hero, Tools, Projects, Contact],
+  imports: [Hero, Tools, Projects, Contact, Certifications],
   templateUrl: './app.html',
   styleUrl: './app.css',
   changeDetection: ChangeDetectionStrategy.OnPush

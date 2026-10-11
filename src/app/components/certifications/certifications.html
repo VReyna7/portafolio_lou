@@ -1,0 +1,55 @@
+<section id="certificaciones" class="section certs" appReveal=".eyebrow, .section__title, .section__lead">
+  <p class="eyebrow">Formación continua</p>
+  <h2 class="section__title">{{ certifications().title }}</h2>
+  @if (certifications().description) {
+    <p class="section__lead">{{ certifications().description }}</p>
+  }
+
+  <ul class="diplomas">
+    @for (item of certifications().items; track item.title) {
+      <li class="diploma">
+        <button
+          type="button"
+          class="diploma__paper"
+          [attr.aria-label]="'Ver diploma: ' + item.title"
+          (click)="open(item)"
+        >
+          <ng-container [ngTemplateOutlet]="paper" [ngTemplateOutletContext]="{ $implicit: item }" />
+        </button>
+        <p class="diploma__title">{{ item.title }}</p>
+        <p class="diploma__issuer">
+          {{ item.issuer }}
+          @if (item.year) {
+            · {{ item.year }}
+          }
+        </p>
+      </li>
+    }
+  </ul>
+</section>
+
+<dialog #viewer class="viewer" (click)="onViewerClick($event)" (close)="selected.set(null)">
+  @if (selected(); as item) {
+    <button type="button" class="viewer__close" aria-label="Cerrar" (click)="close()">×</button>
+    <div class="viewer__paper">
+      <ng-container [ngTemplateOutlet]="paper" [ngTemplateOutletContext]="{ $implicit: item }" />
+    </div>
+    <p class="viewer__caption">{{ item.title }} · {{ item.issuer }}</p>
+  }
+</dialog>
+
+<!-- Real scan when available, otherwise a paper mock-up with the diploma's data. -->
+<ng-template #paper let-item>
+  @if (item.image) {
+    <img [src]="item.image" [alt]="item.title" loading="lazy" />
+  } @else {
+    <div class="mock">
+      <div class="mock__frame">
+        <span class="mock__kicker">Diplomado</span>
+        <span class="mock__title">{{ item.title }}</span>
+        <span class="mock__rule" aria-hidden="true"></span>
+        <span class="mock__issuer">{{ item.issuer }}</span>
+      </div>
+    </div>
+  }
+</ng-template>

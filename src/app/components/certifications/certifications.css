@@ -1,0 +1,172 @@
+/* Quiet closing band: soft paper background, lower visual weight than the main sections. */
+:host {
+  display: block;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+
+.certs {
+  text-align: center;
+}
+
+.certs .eyebrow {
+  justify-content: center;
+}
+
+.certs .section__lead {
+  margin: 0 auto;
+}
+
+.diplomas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(2rem, 6vw, 4.5rem);
+  margin: 3rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.diploma {
+  width: min(380px, 100%);
+}
+
+/* Resting tilt like papers on a desk; `rotate`/`scale` keep it independent from GSAP. */
+.diploma__paper {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  cursor: zoom-in;
+  background: var(--white);
+  box-shadow: 0 18px 40px rgba(20, 20, 20, 0.14), 0 2px 6px rgba(20, 20, 20, 0.08);
+  rotate: -4deg;
+  transition: rotate 0.35s ease, scale 0.35s ease, box-shadow 0.35s ease;
+}
+
+.diploma:nth-child(even) .diploma__paper {
+  rotate: 3deg;
+}
+
+.diploma__paper:hover,
+.diploma__paper:focus-visible {
+  rotate: 0deg;
+  scale: 1.04;
+  box-shadow: 0 28px 60px rgba(123, 44, 191, 0.22), 0 4px 10px rgba(20, 20, 20, 0.08);
+}
+
+.diploma__paper img {
+  width: 100%;
+  height: auto;
+}
+
+.diploma__title {
+  margin: 1.5rem 0 0.15rem;
+  font-weight: 700;
+}
+
+.diploma__issuer {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+/* Paper mock-up shown until the real scan is added. */
+.mock {
+  aspect-ratio: 1.414 / 1;
+  padding: 0.9rem;
+  background: var(--white);
+}
+
+.mock__frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 1rem;
+  border: 3px double var(--violet);
+  text-align: center;
+}
+
+.mock__kicker {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--violet);
+}
+
+.mock__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.mock__rule {
+  width: 56px;
+  height: 2px;
+  background: var(--ink);
+}
+
+.mock__issuer {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.viewer {
+  width: min(1000px, 94vw);
+  max-height: 92vh;
+  padding: 1.25rem;
+  border: 0;
+  border-radius: 20px;
+  overflow: auto;
+  font: inherit;
+}
+
+.viewer__paper img {
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+}
+
+/* Height-capped so a landscape diploma plus its caption fit without scrolling. */
+.viewer__paper .mock {
+  width: min(100%, calc(74vh * 1.414));
+  margin: 0 auto;
+}
+
+.viewer__paper .mock__title {
+  font-size: clamp(1.5rem, 4vw, 2.6rem);
+}
+
+.viewer__caption {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-weight: 700;
+}
+
+.viewer__close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--white);
+  background: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diploma__paper {
+    transition: none;
+  }
+}
