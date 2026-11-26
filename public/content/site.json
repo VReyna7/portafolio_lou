@@ -188,6 +188,12 @@
         "issuer": "Microsoft",
         "year": "2021",
         "image": "certifications/microsoft-excel-2016.jpg"
+      },
+      {
+        "title": "Curso de Community Management",
+        "issuer": "Platzi",
+        "year": "2026",
+        "image": "certifications/platzi-community-management.jpg"
       }
     ]
   }

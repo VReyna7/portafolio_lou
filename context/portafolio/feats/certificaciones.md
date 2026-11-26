@@ -44,6 +44,7 @@ Si se elimina el bloque `certifications` o queda sin `items`, la sección no se 
 - `certifications/meta-marketing-digital.jpg`: Ruta de aprendizaje sobre Marketing Digital con herramientas de Meta (Meta y Ministerio de Economía, 2024). 63 KB.
 - `certifications/udb-casas.jpg`: Certificación de inglés CASAS, puntaje 232 (Universidad Don Bosco, 2026). 70 KB.
 - `certifications/microsoft-excel-2016.jpg`: Microsoft Office Specialist: Excel 2016 (Microsoft, 2021). 102 KB.
+- `certifications/platzi-community-management.jpg`: Curso de Community Management (Platzi, 2026). Convertido desde PDF.
 - Convertidas de PNG a JPG calidad 80 a ~1024–1200 px de ancho; bajar más la calidad hace ilegible el texto en el visor.
 
 ## Pendiente
