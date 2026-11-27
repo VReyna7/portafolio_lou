@@ -53,7 +53,7 @@ export async function writeOverlay(overlay: Overlay): Promise<void> {
 }
 
 export function web3Key(content: PublishedContent): string | null {
-  const fromEnv = process.env.WEB3FORMS_KEY?.trim();
+  const fromEnv = process.env['WEB3FORMS_KEY']?.trim();
   if (fromEnv) {
     return fromEnv;
   }

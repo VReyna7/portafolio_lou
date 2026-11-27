@@ -8,7 +8,7 @@ import { authSecret, issueLink } from '../lib/token';
 const DEVELOPER_EMAIL = 'veduardo239@gmail.com';
 
 function editorEmails(): string[] {
-  const configured = (process.env.EDITOR_EMAIL ?? '')
+  const configured = (process.env['EDITOR_EMAIL'] ?? '')
     .split(/[,;]/)
     .map((item) => item.trim().toLowerCase())
     .filter(Boolean);

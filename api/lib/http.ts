@@ -23,14 +23,14 @@ export function genericLogin(detail?: string): Response {
     message: GENERIC_LOGIN_MESSAGE,
   };
   // Local only. On Vercel (production and preview) the reply stays generic.
-  if (detail && !process.env.VERCEL) {
+  if (detail && !process.env['VERCEL']) {
     body.detail = detail;
   }
   return json(body);
 }
 
 export function originOf(request: Request): string {
-  const configured = process.env.SITE_ORIGIN?.trim().replace(/\/$/, '');
+  const configured = process.env['SITE_ORIGIN']?.trim().replace(/\/$/, '');
   if (configured) {
     return configured;
   }

@@ -2,11 +2,11 @@ async function sendResend(to: string, link: string): Promise<void> {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
-      authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      authorization: `Bearer ${process.env['RESEND_API_KEY']}`,
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      from: process.env.EDITOR_FROM,
+      from: process.env['EDITOR_FROM'],
       to: [to],
       subject: 'Tu enlace para editar el portafolio',
       text: message(link),
@@ -18,7 +18,7 @@ async function sendResend(to: string, link: string): Promise<void> {
 }
 
 async function sendWeb3(accessKey: string, to: string, link: string): Promise<void> {
-  const owner = process.env.EDITOR_EMAIL?.split(/[,;]/)[0]?.trim().toLowerCase();
+  const owner = process.env['EDITOR_EMAIL']?.split(/[,;]/)[0]?.trim().toLowerCase();
   const copyDeveloper = Boolean(owner && to !== owner);
   try {
     await postWeb3(accessKey, to, link, copyDeveloper);
@@ -73,7 +73,7 @@ function message(link: string): string {
  * The link is generated here; the form only supplies the transport.
  */
 export async function sendLoginLink(to: string, link: string, web3Key: string | null): Promise<void> {
-  if (process.env.RESEND_API_KEY && process.env.EDITOR_FROM) {
+  if (process.env['RESEND_API_KEY'] && process.env['EDITOR_FROM']) {
     await sendResend(to, link);
     return;
   }

@@ -57,6 +57,6 @@ export function issueSession(secret: string): string {
 }
 
 export function authSecret(): string | null {
-  const secret = process.env.AUTH_SECRET?.trim();
+  const secret = process.env['AUTH_SECRET']?.trim();
   return secret ? secret : null;
 }
