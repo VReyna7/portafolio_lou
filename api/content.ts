@@ -1,7 +1,7 @@
-import { json } from '../server/editor/http';
-import { parseOverlay } from '../server/editor/overlay';
-import { mergeContent, readBase, readOverlay, writeOverlay } from '../server/editor/publish';
-import { readSession } from '../server/editor/session';
+import { json } from '../server/editor/http.js';
+import { parseOverlay } from '../server/editor/overlay.js';
+import { mergeContent, readBase, readOverlay, writeOverlay } from '../server/editor/publish.js';
+import { readSession } from '../server/editor/session.js';
 
 export async function GET(request: Request): Promise<Response> {
   try {

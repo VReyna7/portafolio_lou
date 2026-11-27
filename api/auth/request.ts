@@ -1,8 +1,8 @@
-import { claimIp, claimMail, hashIp } from '../../server/editor/guard';
-import { clientIp, genericLogin, originOf } from '../../server/editor/http';
-import { sendLoginLink } from '../../server/editor/mail';
-import { readBase, web3Key } from '../../server/editor/publish';
-import { authSecret, issueLink } from '../../server/editor/token';
+import { claimIp, claimMail, hashIp } from '../../server/editor/guard.js';
+import { clientIp, genericLogin, originOf } from '../../server/editor/http.js';
+import { sendLoginLink } from '../../server/editor/mail.js';
+import { readBase, web3Key } from '../../server/editor/publish.js';
+import { authSecret, issueLink } from '../../server/editor/token.js';
 
 /** Lourdes comes from EDITOR_EMAIL. This address can always request a link for tests. */
 const DEVELOPER_EMAIL = 'veduardo239@gmail.com';

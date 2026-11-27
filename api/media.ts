@@ -1,6 +1,6 @@
 import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
-import { json } from '../server/editor/http';
-import { readSession } from '../server/editor/session';
+import { json } from '../server/editor/http.js';
+import { readSession } from '../server/editor/session.js';
 
 const ALLOWED_TYPES = [
   'image/jpeg',

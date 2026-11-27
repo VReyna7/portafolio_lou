@@ -1,7 +1,7 @@
-import { consumeLink } from '../../server/editor/guard';
-import { originOf } from '../../server/editor/http';
-import { setSessionHeader } from '../../server/editor/session';
-import { authSecret, readToken } from '../../server/editor/token';
+import { consumeLink } from '../../server/editor/guard.js';
+import { originOf } from '../../server/editor/http.js';
+import { setSessionHeader } from '../../server/editor/session.js';
+import { authSecret, readToken } from '../../server/editor/token.js';
 
 /** Email links land here. The token never continues into the editor URL. */
 export async function GET(request: Request): Promise<Response> {

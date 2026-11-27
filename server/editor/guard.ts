@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
-import { seal, unseal } from './seal';
-import { RATE_PATH, USED_PATH, readText, writeText } from './store';
+import { seal, unseal } from './seal.js';
+import { RATE_PATH, USED_PATH, readText, writeText } from './store.js';
 
 const IP_LIMIT = 8;
 const IP_WINDOW_MS = 10 * 60 * 1000;

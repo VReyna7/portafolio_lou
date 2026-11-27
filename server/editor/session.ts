@@ -1,5 +1,5 @@
-import { authSecret, issueSession, readToken, SESSION_TTL_MS } from './token';
-import { clearSessionCookie, isHttps, readSessionCookie, sessionCookie } from './http';
+import { authSecret, issueSession, readToken, SESSION_TTL_MS } from './token.js';
+import { clearSessionCookie, isHttps, readSessionCookie, sessionCookie } from './http.js';
 
 export async function readSession(request: Request): Promise<boolean> {
   const secret = authSecret();

@@ -1,6 +1,6 @@
-import { parseOverlay, type Overlay } from './overlay';
-import { originOf } from './http';
-import { OVERLAY_PATH, readText, writeText } from './store';
+import { parseOverlay, type Overlay } from './overlay.js';
+import { originOf } from './http.js';
+import { OVERLAY_PATH, readText, writeText } from './store.js';
 
 export interface PublishedContent {
   profile: unknown;

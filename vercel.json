@@ -3,5 +3,10 @@
   "framework": "angular",
   "buildCommand": "ng build",
   "outputDirectory": "dist/portafolio-lourdes/browser",
+  "functions": {
+    "api/**/*.ts": {
+      "includeFiles": "server/**"
+    }
+  },
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
