@@ -33,13 +33,15 @@ export class Tools {
         return;
       }
       ctx = gsap.context(() => {
+        // Only this stagger owns `.tool` — appReveal must not target them too, or a second
+        // from() resets autoAlpha to 0 mid-flight and cards vanish in a cascade.
         gsap.from('.tool', {
           y: 28,
           autoAlpha: 0,
           duration: 0.65,
           ease: 'power3.out',
           stagger: 0.05,
-          clearProps: 'transform',
+          clearProps: 'transform,opacity,visibility',
           scrollTrigger: { trigger: '.tools-grid', start: 'top 82%', once: true }
         });
       }, host);

@@ -28,7 +28,7 @@ export class Reveal {
           duration: 0.8,
           ease: 'power3.out',
           stagger: 0.07,
-          clearProps: 'transform',
+          clearProps: 'transform,opacity,visibility',
           scrollTrigger: { trigger: host, start: 'top 82%', once: true }
         });
       }, host);

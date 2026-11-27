@@ -44,7 +44,7 @@ export class Projects {
           duration: 0.85,
           ease: 'power3.out',
           stagger: 0.12,
-          clearProps: 'transform',
+          clearProps: 'transform,opacity,visibility',
           scrollTrigger: { trigger: '.gallery', start: 'top 82%', once: true }
         });
       }, host);
