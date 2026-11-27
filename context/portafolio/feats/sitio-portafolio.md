@@ -22,7 +22,7 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 
 Ruta sin enlace: `/estudio`. El mismo proyecto y el mismo dominio. Un subdominio quedaría publicado en los registros de certificados.
 
-Lourdes abre esa dirección (o el icono instalado), escribe su correo y recibe un enlace de un solo uso que vence en 15 minutos. No hay contraseña. El enlace solo se envía si el correo es `EDITOR_EMAIL` o `veduardo239@gmail.com` (pruebas del desarrollador). Máximo 8 pedidos cada 10 minutos por IP y 5 correos por hora. El contador y los enlaces ya usados se guardan cifrados. Web3Forms entrega en el buzón de la clave; la copia al segundo correo depende del plan. Con `RESEND_API_KEY` y `EDITOR_FROM` el enlace sale directo al correo que lo pidió.
+Lourdes abre esa dirección (o el icono instalado), escribe su correo y recibe un enlace de un solo uso que vence en 15 minutos. No hay contraseña. El enlace solo se envía si el correo es `EDITOR_EMAIL` o `veduardo239@gmail.com` (pruebas del desarrollador). Máximo 8 pedidos cada 10 minutos por IP y 5 correos por hora. El contador y los enlaces ya usados se guardan cifrados. El enlace lo manda Resend al correo que lo pidió. Web3Forms no sirve para esto: rechaza los envíos que salen del servidor.
 
 Desde el panel puede crear, ordenar y borrar proyectos, diplomados y experiencias, y subir fotos o videos (máximo 25 MB, directo al almacén). Guardar escribe solo esas tres listas. Perfil, herramientas y contacto siguen en `site.json`: un deploy nuevo los actualiza y no borra lo que ella guardó.
 
@@ -34,9 +34,11 @@ Variables en Vercel, nunca en el repositorio. Las funciones del panel son solo l
 | `EDITOR_EMAIL` | Correo de Lourdes. Puede haber varios, separados por coma. `veduardo239@gmail.com` ya está autorizado en código para pruebas. |
 | `BLOB_READ_WRITE_TOKEN` | Lo crea Vercel al conectar un Blob store público. Sin esto el sitio sigue leyendo `site.json` y el panel no puede enviar el enlace ni guardar. |
 
-Opcional: `WEB3FORMS_KEY` (si no está, se usa la clave de `site.json`), `RESEND_API_KEY` y `EDITOR_FROM` si Web3Forms recorta el enlace, y `SITE_ORIGIN` (`https://dominio`) si el enlace debe salir siempre con el dominio público.
+| `RESEND_API_KEY` | La pone la integración de Resend. Sin esta clave el enlace no sale. |
+| `EDITOR_FROM` | Remitente en el dominio verificado, por ejemplo `Portafolio <panel@lourdesmk.site>`. |
+| `SITE_ORIGIN` | `https://www.lourdesmk.site`, para que el enlace del correo use el dominio público. |
 
-El correo sale por Web3Forms, que ya entrega en el buzón de Lourdes. La sesión dura 7 días en una cookie `HttpOnly`.
+`GET /api/auth/session` responde 200 con `{ ok: false }` cuando no hay sesión. Un 401 en esa consulta solo confundía la consola: no es un fallo. La sesión dura 7 días en una cookie `HttpOnly`.
 
 ## Decisiones técnicas
 
