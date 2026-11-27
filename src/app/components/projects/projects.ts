@@ -47,7 +47,8 @@ export class Projects {
             duration: 0.7,
             ease: 'power3.out',
             stagger: 0.1,
-            clearProps: 'all',
+            // Never clearProps:'all' — that wipes [style.--accent] and every card falls back to violet.
+            clearProps: 'transform,opacity,visibility',
             scrollTrigger: { trigger: '.gallery', start: 'top 82%', once: true }
           }
         );
