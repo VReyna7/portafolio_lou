@@ -32,15 +32,15 @@ export class Tools {
       if (prefersReducedMotion()) {
         return;
       }
-      // Accent marks draw in as each row enters — more deliberate than a generic fade.
       ctx = gsap.context(() => {
-        gsap.from('.tool__mark', {
-          scaleY: 0,
-          transformOrigin: 'top',
-          duration: 0.55,
-          ease: 'power2.out',
-          stagger: 0.06,
-          scrollTrigger: { trigger: '.tools-list', start: 'top 80%', once: true }
+        gsap.from('.tool', {
+          y: 28,
+          autoAlpha: 0,
+          duration: 0.65,
+          ease: 'power3.out',
+          stagger: 0.05,
+          clearProps: 'transform',
+          scrollTrigger: { trigger: '.tools-grid', start: 'top 82%', once: true }
         });
       }, host);
     });

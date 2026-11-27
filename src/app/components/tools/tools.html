@@ -3,17 +3,14 @@
   <h2 class="section__title">{{ tools().title }}</h2>
   <p class="section__lead">{{ tools().description }}</p>
 
-  <ul class="tools-list">
+  <ul class="tools-grid">
     @for (tool of tools().items; track tool.name) {
       <li class="tool">
-        <span class="tool__mark" aria-hidden="true"></span>
         <span class="tool__icon" aria-hidden="true">
           <app-icon [name]="iconFor(tool.area)" />
         </span>
-        <span class="tool__copy">
-          <span class="tool__name">{{ tool.name }}</span>
-          <span class="tool__area">{{ tool.area }}</span>
-        </span>
+        <span class="tool__name">{{ tool.name }}</span>
+        <span class="tool__area">{{ tool.area }}</span>
       </li>
     }
   </ul>

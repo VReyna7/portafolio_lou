@@ -46,32 +46,23 @@
   background: var(--white);
 }
 
-/* Light case-study header: accent as a bar, not a gradient to black. */
+/*
+  Attractive color block without the AI accent→black gradient.
+  Flat brand color reads as intentional system, not a template fade.
+*/
 .detail__hero {
-  position: relative;
-  padding: 3.5rem 2.5rem 2.25rem;
-  color: var(--ink);
-  background: var(--paper);
-  border-bottom: 1px solid var(--line);
-}
-
-.detail__hero::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 5px;
+  padding: 3.5rem 2.5rem 2.5rem;
+  color: var(--white);
   background: var(--accent);
 }
 
 .detail__kicker {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.65rem;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  opacity: 0.75;
 }
 
 .detail__category {
@@ -80,7 +71,7 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
+  opacity: 0.9;
 }
 
 .detail__title {
@@ -92,7 +83,7 @@
 .detail__summary {
   max-width: 560px;
   margin: 0;
-  color: var(--ink-soft);
+  opacity: 0.92;
 }
 
 .detail__blocks {
@@ -103,7 +94,6 @@
   padding: 2rem 2.5rem 0;
 }
 
-/* A task list makes "Mi rol" tall; equal columns keep both cards closer in height. */
 .detail__blocks--tasks {
   grid-template-columns: 1fr 1fr;
 }
@@ -179,7 +169,6 @@
   scale: 1.04;
 }
 
-/* Portrait clips: narrower and centered; the vh cap keeps 9:16 reels inside short screens. */
 .step__media--video {
   position: relative;
   justify-self: center;
@@ -187,7 +176,6 @@
   background: var(--ink);
 }
 
-/* Minimal overlay: restart, sound toggle and a volume slider only while the clip is audible. */
 .step__controls {
   position: absolute;
   right: 0.75rem;
@@ -252,7 +240,7 @@
   font-size: 1.4rem;
   font-weight: 800;
   color: var(--white);
-  background: linear-gradient(135deg, var(--accent), var(--ink));
+  background: var(--accent);
 }
 
 .step__number {
@@ -293,5 +281,11 @@
   .steps {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step__media img {
+    transition: none;
   }
 }
