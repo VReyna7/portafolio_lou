@@ -1,8 +1,8 @@
-<section id="proyectos" class="section" appReveal=".eyebrow, .section__title, .section__lead">
+<section id="proyectos" class="section" appReveal=".eyebrow, .section__title, .section__lead, .card">
   <p class="eyebrow">Trabajo realizado</p>
   <h2 class="section__title">Proyectos</h2>
   <p class="section__lead">
-    Casos pensados de punta a punta: investigación, decisión creativa y resultado medible.
+    Casos donde muestro el proceso: la investigación, las herramientas y el resultado.
   </p>
 
   <div class="gallery">
@@ -19,13 +19,8 @@
           </span>
         }
         <span class="card__body">
-          <span class="card__meta">
-            <span class="card__number">{{ number(i) }}</span>
-            <span class="card__category">
-              <app-icon [name]="iconFor(project.category)" />
-              {{ project.category }}
-            </span>
-          </span>
+          <span class="card__number">{{ number(i) }}</span>
+          <span class="card__category">{{ project.category }}</span>
           <span class="card__title">{{ project.title }}</span>
           <span class="card__summary">{{ project.summary }}</span>
           <span class="card__cta">Ver proyecto <span aria-hidden="true">→</span></span>
