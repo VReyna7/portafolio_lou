@@ -1,0 +1,75 @@
+<div class="empty">
+  <app-ui-icon name="pencil" />
+  <h2>Elige algo para editar</h2>
+  <p>Toca una tarjeta del sitio o usa «Agregar». Aquí aparecerán sus datos.</p>
+</div>
+
+@if (last(); as t) {
+  <div class="content">
+    <button
+      type="button"
+      class="grip"
+      aria-label="Cambiar el tamaño del panel"
+      (pointerdown)="gripDown($event)"
+      (pointerup)="gripUp($event)"
+      (click)="gripClick()"
+    >
+      <span></span>
+    </button>
+
+    <header class="head">
+      <div class="head__text">
+        <p class="head__eyebrow">{{ meta()?.eyebrow }}</p>
+        <h2 #heading class="head__title" tabindex="-1">{{ meta()?.title }}</h2>
+      </div>
+      <div class="head__tools">
+        @if (itemKind()) {
+          <button
+            type="button"
+            class="icon-btn"
+            aria-label="Mover antes"
+            [disabled]="t.index === 0"
+            (click)="move(-1)"
+          >
+            <app-ui-icon name="left" />
+          </button>
+          <button
+            type="button"
+            class="icon-btn"
+            aria-label="Mover después"
+            [disabled]="t.index >= count() - 1"
+            (click)="move(1)"
+          >
+            <app-ui-icon name="right" />
+          </button>
+          <button type="button" class="icon-btn icon-btn--danger" aria-label="Quitar" (click)="remove()">
+            <app-ui-icon name="trash" />
+          </button>
+        }
+        <button type="button" class="icon-btn" aria-label="Cerrar el editor" (click)="close()">
+          <app-ui-icon name="close" />
+        </button>
+      </div>
+    </header>
+
+    <div #body class="body">
+      @switch (t.kind) {
+        @case ('project') {
+          <app-project-form [index]="t.index" />
+        }
+        @case ('diploma') {
+          <app-diploma-form [index]="t.index" />
+        }
+        @case ('job') {
+          <app-job-form [index]="t.index" />
+        }
+        @case ('diplomas-section') {
+          <app-section-form which="diplomas" />
+        }
+        @case ('jobs-section') {
+          <app-section-form which="jobs" />
+        }
+      }
+    </div>
+  </div>
+}

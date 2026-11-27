@@ -1,0 +1,262 @@
+@if (project(); as p) {
+  <div class="seg" role="group" aria-label="Partes del proyecto">
+    <button type="button" [attr.aria-pressed]="tab() === 'info'" (click)="tab.set('info')">Datos</button>
+    <button type="button" [attr.aria-pressed]="tab() === 'evidence'" (click)="tab.set('evidence')">
+      Evidencias <span class="seg__count">{{ p.evidence.length }}</span>
+    </button>
+    <button type="button" [attr.aria-pressed]="tab() === 'style'" (click)="tab.set('style')">Estilo</button>
+  </div>
+
+  @switch (tab()) {
+    @case ('info') {
+      <label class="field">
+        <span class="field__label">Nombre del proyecto</span>
+        <input
+          class="field__control"
+          autocomplete="off"
+          placeholder="Ej. Campaña de lanzamiento"
+          [value]="p.title"
+          (input)="store.renameProject(index(), valueOf($event))"
+        />
+      </label>
+      <label class="field">
+        <span class="field__label">Categoría</span>
+        <input
+          class="field__control"
+          autocomplete="off"
+          list="studio-categories"
+          [value]="p.category"
+          (input)="store.patch('project', index(), { category: valueOf($event) })"
+        />
+        <datalist id="studio-categories">
+          @for (category of categories; track category) {
+            <option [value]="category"></option>
+          }
+        </datalist>
+      </label>
+      <label class="field">
+        <span class="field__label">Resumen</span>
+        <span class="field__hint">Una o dos frases. Es lo que se ve en la tarjeta.</span>
+        <textarea
+          class="field__control"
+          rows="3"
+          [value]="p.summary"
+          (input)="store.patch('project', index(), { summary: valueOf($event) })"
+        ></textarea>
+      </label>
+      <label class="field">
+        <span class="field__label">Mi rol</span>
+        <textarea
+          class="field__control"
+          rows="3"
+          [value]="p.role"
+          (input)="store.patch('project', index(), { role: valueOf($event) })"
+        ></textarea>
+      </label>
+      <label class="field">
+        <span class="field__label">Funciones</span>
+        <span class="field__hint">Escribe una por línea.</span>
+        <textarea
+          class="field__control"
+          rows="4"
+          [value]="tasksText(p.tasks)"
+          (input)="store.setTasks(index(), valueOf($event))"
+        ></textarea>
+      </label>
+      <label class="field">
+        <span class="field__label">Sobre el proyecto</span>
+        <textarea
+          class="field__control"
+          rows="5"
+          [value]="p.description"
+          (input)="store.patch('project', index(), { description: valueOf($event) })"
+        ></textarea>
+      </label>
+      <label class="field">
+        <span class="field__label">Enlace a más material</span>
+        <input
+          class="field__control"
+          type="url"
+          inputmode="url"
+          placeholder="https://"
+          [value]="p.driveUrl"
+          (input)="store.patch('project', index(), { driveUrl: valueOf($event) })"
+        />
+      </label>
+    }
+
+    @case ('evidence') {
+      <p class="field__hint">Fotos o videos que muestran el resultado. Aparecen dentro del proyecto, en este orden.</p>
+
+      @for (item of p.evidence; track $index; let e = $index) {
+        <section class="evi" [class.is-open]="open() === e">
+          <button
+            type="button"
+            class="evi__head"
+            [attr.aria-expanded]="open() === e"
+            [attr.aria-controls]="'evi-' + e"
+            (click)="toggle(e)"
+          >
+            <span class="evi__thumb">
+              @if (item.image || item.poster) {
+                <img [src]="item.poster || item.image" alt="" />
+              } @else {
+                <app-ui-icon [name]="item.video ? 'video' : 'image'" />
+              }
+            </span>
+            <span class="evi__title">{{ item.title || 'Evidencia ' + (e + 1) }}</span>
+            <app-ui-icon [name]="open() === e ? 'up' : 'down'" />
+          </button>
+
+          @if (open() === e) {
+            <div class="evi__body" [id]="'evi-' + e">
+              <label class="field">
+                <span class="field__label">Título</span>
+                <input
+                  class="field__control"
+                  autocomplete="off"
+                  [value]="item.title"
+                  (input)="store.patchEvidence(index(), e, { title: valueOf($event) })"
+                />
+              </label>
+              <label class="field">
+                <span class="field__label">Descripción</span>
+                <textarea
+                  class="field__control"
+                  rows="3"
+                  [value]="item.description"
+                  (input)="store.patchEvidence(index(), e, { description: valueOf($event) })"
+                ></textarea>
+              </label>
+              <app-file-field
+                label="Foto"
+                [value]="item.image"
+                (picked)="store.patchEvidence(index(), e, { image: $event })"
+                (cleared)="store.patchEvidence(index(), e, { image: '' })"
+              />
+              <app-file-field
+                label="Video (opcional)"
+                kind="video"
+                hint="Toca para elegir un video MP4 (máx. 25 MB)"
+                accept="video/mp4,video/quicktime"
+                [value]="item.video ?? ''"
+                (picked)="store.patchEvidence(index(), e, { video: $event })"
+                (cleared)="store.patchEvidence(index(), e, { video: '' })"
+              />
+
+              @if (item.video) {
+                <app-file-field
+                  label="Imagen mientras carga el video"
+                  hint="Opcional. Toca para elegir una foto"
+                  [value]="item.poster ?? ''"
+                  (picked)="store.patchEvidence(index(), e, { poster: $event })"
+                  (cleared)="store.patchEvidence(index(), e, { poster: '' })"
+                />
+                <div class="field-row">
+                  <label class="field">
+                    <span class="field__label">Forma del video</span>
+                    <select
+                      class="field__control"
+                      (change)="store.patchEvidence(index(), e, { ratio: valueOf($event) })"
+                    >
+                      @for (ratio of ratios(item.ratio); track ratio.value) {
+                        <option [value]="ratio.value" [selected]="ratio.value === (item.ratio || '3 / 4')">
+                          {{ ratio.label }}
+                        </option>
+                      }
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Velocidad</span>
+                    <select class="field__control" (change)="setSpeed(e, valueOf($event))">
+                      @for (speed of speeds; track speed.value) {
+                        <option [value]="speed.value" [selected]="speed.value === (item.speed || 1)">
+                          {{ speed.label }}
+                        </option>
+                      }
+                    </select>
+                  </label>
+                </div>
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    role="switch"
+                    [checked]="!!item.sound"
+                    (change)="store.patchEvidence(index(), e, { sound: checkedOf($event) })"
+                  />
+                  <span class="switch__track" aria-hidden="true"></span>
+                  <span>El video tiene audio</span>
+                </label>
+              }
+
+              <div class="evi__tools">
+                <button
+                  type="button"
+                  class="icon-btn"
+                  aria-label="Mover antes"
+                  [disabled]="e === 0"
+                  (click)="moveEvidence(e, -1)"
+                >
+                  <app-ui-icon name="left" />
+                </button>
+                <button
+                  type="button"
+                  class="icon-btn"
+                  aria-label="Mover después"
+                  [disabled]="e === p.evidence.length - 1"
+                  (click)="moveEvidence(e, 1)"
+                >
+                  <app-ui-icon name="right" />
+                </button>
+                <button type="button" class="evi__remove" (click)="removeEvidence(e)">
+                  <app-ui-icon name="trash" /> Quitar evidencia
+                </button>
+              </div>
+            </div>
+          }
+        </section>
+      }
+
+      <button type="button" class="pill-btn" (click)="addEvidence()">
+        <app-ui-icon name="plus" /> Agregar evidencia
+      </button>
+    }
+
+    @case ('style') {
+      <app-file-field
+        label="Portada de la tarjeta"
+        [value]="p.cover"
+        (picked)="store.patch('project', index(), { cover: $event })"
+        (cleared)="store.patch('project', index(), { cover: '' })"
+      />
+
+      <div class="field" role="radiogroup" aria-label="Color del proyecto">
+        <span class="field__label">Color</span>
+        <div class="swatches">
+          @for (color of swatches; track color) {
+            <button
+              type="button"
+              class="swatch"
+              role="radio"
+              [attr.aria-checked]="p.accent.toLowerCase() === color"
+              [attr.aria-label]="'Color ' + color"
+              [style.--swatch]="color"
+              (click)="store.patch('project', index(), { accent: color })"
+            >
+              <app-ui-icon name="check" />
+            </button>
+          }
+          <label class="swatch swatch--custom">
+            <span class="sr-only">Otro color</span>
+            <input
+              type="color"
+              [value]="p.accent"
+              (input)="store.patch('project', index(), { accent: valueOf($event) })"
+            />
+            <app-ui-icon name="plus" />
+          </label>
+        </div>
+      </div>
+    }
+  }
+}

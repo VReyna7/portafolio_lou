@@ -1,0 +1,97 @@
+:host {
+  display: block;
+}
+
+.file {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.file__label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.file__drop {
+  position: relative;
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  padding: 1rem;
+  border: 2px dashed #cdbfdc;
+  border-radius: 16px;
+  background: #fbf9fd;
+  color: var(--ink-soft);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.file__drop:hover,
+.file__drop:focus-within {
+  border-color: var(--violet);
+  background: #f4ecfa;
+}
+
+.file__drop:focus-within {
+  outline: 3px solid rgba(123, 44, 191, 0.35);
+  outline-offset: 2px;
+}
+
+.file__drop.is-loading {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.file__preview {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.file__empty,
+.file__ready {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.file__ready {
+  color: var(--ink);
+}
+
+/* The native input stays in the DOM (keyboard and screen readers) but is visually replaced. */
+.file__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file__cta {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.file__remove {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 0.25rem;
+  border: 0;
+  background: none;
+  color: #8a1f2b;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}

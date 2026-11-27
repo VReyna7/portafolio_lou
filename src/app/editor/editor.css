@@ -1,153 +1,342 @@
 :host {
   display: block;
-  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--paper);
   color: var(--ink);
 }
 
-.editor,
-.gate {
-  width: min(760px, calc(100% - 2rem));
-  margin: 0 auto;
-  padding: 1.5rem 0 5rem;
-}
-
-.gate {
-  min-height: 100vh;
+.status {
   display: grid;
-  align-content: center;
-  gap: 1.5rem;
-}
-
-.gate__card,
-.sheet,
-.install,
-fieldset {
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 1.25rem;
-}
-
-h1,
-h2 {
-  margin: 0 0 0.5rem;
-}
-
-.editor__bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0.75rem;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.editor__actions,
-.row,
-.tabs,
-.picker,
-.split {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.editor__lead,
-.editor__note,
-.install p,
-.gate p {
+  place-items: center;
+  min-height: 100dvh;
+  margin: 0;
   color: var(--ink-soft);
 }
 
-.editor__error {
-  color: #8a1f2b;
+/* Studio layout: phones stack everything; desktop adds the side column (see studio-sheet.css). */
+.studio {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.studio > * {
+  grid-column: 1;
+}
+
+.bar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: calc(0.5rem + env(safe-area-inset-top)) 0.75rem 0.5rem 1rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+}
+
+.bar__title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.bar h1 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
   font-weight: 700;
+  white-space: nowrap;
+  animation: pop 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.chip app-ui-icon {
+  width: 1em;
+  height: 1em;
+}
+
+.chip--dirty {
+  background: #fff1d6;
+  color: #7a4a00;
+}
+
+.chip--dirty::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e08a00;
+}
+
+.chip--ok {
+  background: #e4f4ea;
+  color: #14532d;
+}
+
+.bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.bar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+  padding: 0 0.6rem;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.bar__btn:hover {
+  background: #f1eaf7;
+}
+
+.save {
+  min-height: 44px;
+  margin-left: 0.25rem;
+  padding: 0 1.2rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--violet);
+  color: var(--white);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease, scale 0.15s ease;
+}
+
+.save:hover:not(:disabled) {
+  scale: 1.04;
+}
+
+.save:disabled {
+  background: #d9cfe6;
+  color: #6b5d7d;
+  cursor: default;
+}
+
+.bar__progress {
+  position: absolute;
+  inset: auto 0 -2px 0;
+  height: 3px;
+  overflow: hidden;
+  background: #eadcf6;
+}
+
+.bar__progress::after {
+  content: '';
+  display: block;
+  width: 40%;
+  height: 100%;
+  background: var(--violet);
+  animation: slide 1s ease-in-out infinite;
 }
 
 .tabs {
-  margin: 1rem 0;
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.6rem 0.75rem;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+  scrollbar-width: none;
 }
 
-.tabs button,
-.picker__item {
-  border: 1px solid var(--line);
-  background: var(--white);
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1.5px solid var(--line);
   border-radius: 999px;
-  padding: 0.55rem 0.9rem;
+  background: var(--white);
+  color: var(--ink);
   font: inherit;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.tab[aria-current='true'] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--white);
+}
+
+.tab__count {
+  min-width: 1.5em;
+  padding: 0 0.4em;
+  border-radius: 999px;
+  background: #f1eaf7;
+  color: var(--ink);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.tab[aria-current='true'] .tab__count {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+}
+
+.tip {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #f1eaf7;
+  color: var(--ink);
+  animation: tip-in 0.4s ease;
+}
+
+.tip app-ui-icon {
+  color: var(--violet);
+}
+
+.tip p {
+  flex: 1;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.tip button {
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--white);
+  font: inherit;
+  font-size: 0.88rem;
   font-weight: 700;
   cursor: pointer;
 }
 
-.is-on {
-  background: var(--ink);
-  color: var(--white);
-  border-color: var(--ink);
+.studio > app-studio-preview {
+  grid-row: 4;
 }
 
-.sheet,
-fieldset {
-  display: grid;
-  gap: 0.85rem;
-  margin-top: 1rem;
+@media (max-width: 639px) {
+  .bar__btn .label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .bar h1 {
+    font-size: 1rem;
+  }
+
+  /* On phones the save state shrinks to a dot or a check; its text stays for screen readers. */
+  .chip {
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+  }
+
+  .chip__text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .chip--dirty::before {
+    width: 12px;
+    height: 12px;
+  }
+
+  .bar__btn--install {
+    display: none;
+  }
+
+  .save {
+    padding: 0 1rem;
+  }
 }
 
-label {
-  display: grid;
-  gap: 0.35rem;
-  font-weight: 700;
-  font-size: 0.92rem;
+@media (min-width: 960px) {
+  .studio {
+    grid-template-columns: minmax(0, 1fr) 420px;
+  }
+
+  /* Qualified with `.studio >` to outrank the single-column default above. */
+  .studio > .bar {
+    grid-column: 1 / -1;
+  }
+
+  /* Placed here (not in the sheet's own CSS) so it wins over the `.studio > *` rule above. */
+  .studio > app-studio-sheet {
+    grid-column: 2;
+    grid-row: 2 / -1;
+  }
+
 }
 
-input,
-textarea {
-  width: 100%;
-  padding: 0.75rem 0.8rem;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  font: inherit;
-  font-weight: 400;
-  color: var(--ink);
-  background: var(--white);
+@keyframes pop {
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
 }
 
-.color input {
-  width: 72px;
-  height: 44px;
-  padding: 0.2rem;
+@keyframes slide {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 250% 0;
+  }
 }
 
-.check {
-  grid-template-columns: auto 1fr;
-  align-items: center;
+@keyframes tip-in {
+  from {
+    opacity: 0;
+    translate: 0 -8px;
+  }
 }
 
-.file img,
-.thumb {
-  width: 140px;
-  border-radius: 12px;
-}
+@media (prefers-reduced-motion: reduce) {
+  .chip,
+  .tip,
+  .bar__progress::after {
+    animation: none;
+  }
 
-.file {
-  display: grid;
-  gap: 0.45rem;
-}
-
-.editor__status {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-}
-
-.split label {
-  flex: 1;
-}
-
-@media (max-width: 680px) {
-  .editor__actions .btn,
-  .tabs button,
-  .picker__item {
-    flex: 1 1 auto;
+  .save {
+    transition: none;
   }
 }

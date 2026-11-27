@@ -1,0 +1,109 @@
+/* Field styles shared by every form in the side panel. */
+:host {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.field__label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.field__hint {
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.field__control {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 0.85rem;
+  border: 1.5px solid #ddd3e8;
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--ink);
+  /* 16px prevents the mobile browser from zooming the page on focus. */
+  font: inherit;
+  font-size: 1rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+textarea.field__control {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.field__control:hover {
+  border-color: #bfaed3;
+}
+
+.field__control:focus-visible {
+  outline: none;
+  border-color: var(--violet);
+  box-shadow: 0 0 0 4px rgba(123, 44, 191, 0.18);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0 1.1rem;
+  border: 1.5px dashed var(--violet);
+  border-radius: 14px;
+  background: transparent;
+  color: var(--violet);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.pill-btn:hover {
+  background: #f4ecfa;
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: #f1eaf7;
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.icon-btn--danger {
+  color: #8a1f2b;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(123, 44, 191, 0.45);
+  outline-offset: 2px;
+}

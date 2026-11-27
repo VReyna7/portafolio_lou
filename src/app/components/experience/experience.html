@@ -7,7 +7,7 @@
 
   <ol class="jobs">
     @for (item of experience().items; track $index) {
-      <li class="job">
+      <li class="job" data-edit="job" [attr.data-index]="$index">
         @if (when(item.start, item.end); as dates) {
           <p class="job__when">{{ dates }}</p>
         }
