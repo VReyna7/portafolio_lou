@@ -385,7 +385,11 @@ export class Editor {
       .get<{ ok: boolean }>('/api/auth/session', { withCredentials: true })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => {
+        next: (session) => {
+          if (!session.ok) {
+            this.finishLoginCheck();
+            return;
+          }
           document.title = 'Editar portafolio';
           if (overlay === 'invalid') {
             this.mode.set('ready');
