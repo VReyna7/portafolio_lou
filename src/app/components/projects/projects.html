@@ -19,12 +19,10 @@
           </span>
         }
         <span class="card__body">
-          <span class="card__meta">
-            <span class="card__number">{{ number(i) }}</span>
-            <span class="card__category">
-              <app-icon [name]="iconFor(project.category)" />
-              {{ project.category }}
-            </span>
+          <span class="card__number">{{ number(i) }}</span>
+          <span class="card__category">
+            <app-icon [name]="iconFor(project.category)" />
+            <span>{{ project.category }}</span>
           </span>
           <span class="card__title">{{ project.title }}</span>
           <span class="card__summary">{{ project.summary }}</span>

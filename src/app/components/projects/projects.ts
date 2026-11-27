@@ -38,15 +38,19 @@ export class Projects {
         return;
       }
       ctx = gsap.context(() => {
-        gsap.from('.card', {
-          y: 48,
-          autoAlpha: 0,
-          duration: 0.85,
-          ease: 'power3.out',
-          stagger: 0.12,
-          clearProps: 'transform,opacity,visibility',
-          scrollTrigger: { trigger: '.gallery', start: 'top 82%', once: true }
-        });
+        gsap.fromTo(
+          '.card',
+          { y: 36, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.7,
+            ease: 'power3.out',
+            stagger: 0.1,
+            clearProps: 'all',
+            scrollTrigger: { trigger: '.gallery', start: 'top 82%', once: true }
+          }
+        );
       }, host);
     });
 
