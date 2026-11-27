@@ -6,8 +6,8 @@
   }
 
   <ul class="diplomas">
-    @for (item of certifications().items; track item.title) {
-      <li class="diploma">
+    @for (item of certifications().items; track $index) {
+      <li class="diploma" data-edit="diploma" [attr.data-index]="$index">
         <button
           type="button"
           class="diploma__paper"

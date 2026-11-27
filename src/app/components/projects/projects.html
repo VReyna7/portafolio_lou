@@ -10,6 +10,8 @@
       <button
         type="button"
         class="card"
+        data-edit="project"
+        [attr.data-index]="i"
         [style.--accent]="project.accent"
         (click)="open(project)"
       >

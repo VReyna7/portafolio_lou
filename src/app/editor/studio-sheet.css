@@ -1,0 +1,216 @@
+/* Phones: a bottom sheet that slides up. Desktop (below): a fixed side column. */
+:host {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  height: 58dvh;
+  border-radius: 22px 22px 0 0;
+  background: var(--white);
+  box-shadow: 0 -14px 40px rgba(20, 8, 28, 0.2);
+  translate: 0 105%;
+  visibility: hidden;
+  transition:
+    translate 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 0.3s ease,
+    visibility 0s 0.4s;
+}
+
+:host(.is-open) {
+  translate: 0 0;
+  visibility: visible;
+  transition:
+    translate 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 0.3s ease;
+}
+
+:host([data-size='peek']) {
+  height: 5.5rem;
+}
+
+:host([data-size='full']) {
+  height: 92dvh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+.empty {
+  display: none;
+}
+
+.grip {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 28px;
+  flex: none;
+  border: 0;
+  background: none;
+  cursor: grab;
+  touch-action: none;
+}
+
+.grip span {
+  width: 44px;
+  height: 5px;
+  border-radius: 999px;
+  background: #cdbfdc;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0 0.75rem 0.6rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.head__text {
+  min-width: 0;
+}
+
+.head__eyebrow {
+  margin: 0;
+  color: var(--violet);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.head__title {
+  margin: 0;
+  overflow: hidden;
+  font-size: 1.15rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.head__title:focus {
+  outline: none;
+}
+
+.head__tools {
+  display: flex;
+  flex: none;
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: #f1eaf7;
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.icon-btn--danger {
+  color: #8a1f2b;
+}
+
+.icon-btn:focus-visible,
+.grip:focus-visible {
+  outline: 3px solid rgba(123, 44, 191, 0.45);
+  outline-offset: 2px;
+}
+
+.body {
+  display: grid;
+  flex: 1;
+  gap: 1rem;
+  align-content: start;
+  min-height: 0;
+  padding: 1rem 1.1rem calc(2rem + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@media (min-width: 960px) {
+  :host {
+    position: static;
+    height: auto;
+    min-height: 0;
+    border-radius: 0;
+    border-left: 1px solid var(--line);
+    box-shadow: none;
+    translate: none;
+    visibility: visible;
+    transition: none;
+  }
+
+  :host([data-size]) {
+    height: auto;
+  }
+
+  .grip {
+    display: none;
+  }
+
+  .head {
+    padding-top: 0.6rem;
+  }
+
+  .empty {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: center;
+    align-content: center;
+    height: 100%;
+    padding: 2rem;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  .empty app-ui-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--violet);
+  }
+
+  .empty h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 1.1rem;
+  }
+
+  .empty p {
+    max-width: 22ch;
+    margin: 0;
+  }
+
+  /* With nothing selected the column shows the hint instead of the last item's form. */
+  :host(:not(.is-open)) .content {
+    display: none;
+  }
+
+  :host(.is-open) .empty {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  :host(.is-open) {
+    transition: none;
+  }
+}

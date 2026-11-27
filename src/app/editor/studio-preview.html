@@ -1,0 +1,44 @@
+@if (site(); as s) {
+  <div class="studio-canvas">
+    <div class="studio-block" data-block="projects">
+      <app-projects [projects]="s.projects" />
+      <div class="studio-actions">
+        <button type="button" class="studio-add" (click)="add('project')">
+          <app-ui-icon name="plus" /> Agregar proyecto
+        </button>
+      </div>
+    </div>
+
+    @if (s.experience; as jobs) {
+      <div class="studio-block" data-block="experience">
+        <div class="studio-actions studio-actions--top">
+          <button type="button" class="studio-chip" (click)="editSection('jobs-section')">
+            <app-ui-icon name="pencil" /> Editar título y descripción
+          </button>
+        </div>
+        <app-experience [experience]="jobs" />
+        <div class="studio-actions">
+          <button type="button" class="studio-add" (click)="add('job')">
+            <app-ui-icon name="plus" /> Agregar experiencia
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (s.certifications; as certs) {
+      <div class="studio-block" data-block="diplomas">
+        <div class="studio-actions studio-actions--top">
+          <button type="button" class="studio-chip" (click)="editSection('diplomas-section')">
+            <app-ui-icon name="pencil" /> Editar título y descripción
+          </button>
+        </div>
+        <app-certifications [certifications]="certs" />
+        <div class="studio-actions">
+          <button type="button" class="studio-add" (click)="add('diploma')">
+            <app-ui-icon name="plus" /> Agregar diplomado
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+}
