@@ -1,7 +1,6 @@
 import { claimIp, claimMail, hashIp } from '../../server/editor/guard.js';
 import { clientIp, genericLogin, originOf } from '../../server/editor/http.js';
 import { sendLoginLink } from '../../server/editor/mail.js';
-import { readBase, web3Key } from '../../server/editor/publish.js';
 import { authSecret, issueLink } from '../../server/editor/token.js';
 
 /** Lourdes comes from EDITOR_EMAIL. This address can always request a link for tests. */
@@ -67,11 +66,10 @@ async function handle(request: Request): Promise<Response> {
     return genericLogin('mail-rate');
   }
 
-  const { token } = issueLink(secret);
+  const { token, jti } = issueLink(secret);
   const link = `${originOf(request)}/api/auth/callback?token=${encodeURIComponent(token)}`;
   try {
-    const base = await readBase(request);
-    await sendLoginLink(email, link, web3Key(base));
+    await sendLoginLink(email, link, jti);
   } catch (error) {
     console.error('login mail failed', error);
     return genericLogin('mail');

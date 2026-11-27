@@ -32,13 +32,17 @@ Variables en Vercel, nunca en el repositorio. Las funciones del panel son solo l
 | --- | --- |
 | `AUTH_SECRET` | Secreto largo para firmar el enlace y la sesión. |
 | `EDITOR_EMAIL` | Correo de Lourdes. Puede haber varios, separados por coma. `veduardo239@gmail.com` ya está autorizado en código para pruebas. |
-| `BLOB_READ_WRITE_TOKEN` | Lo crea Vercel al conectar un Blob store público. Sin esto el sitio sigue leyendo `site.json` y el panel no puede enviar el enlace ni guardar. |
-
-| `RESEND_API_KEY` | La pone la integración de Resend. Sin esta clave el enlace no sale. |
-| `EDITOR_FROM` | Remitente en el dominio verificado, por ejemplo `Portafolio <panel@lourdesmk.site>`. |
+| `BLOB_READ_WRITE_TOKEN` | Lo crea Vercel al conectar un Blob store público. Guarda contenido, límites y enlaces usados. |
+| `RESEND_API_KEY` | Clave de solo envío, restringida al dominio de correo. |
+| `RESEND_TEMPLATE_ID` | Plantilla publicada del enlace de acceso. |
+| `EDITOR_FROM` | `Portafolio Lourdes <acceso@mail.lourdesmk.site>`. |
 | `SITE_ORIGIN` | `https://www.lourdesmk.site`, para que el enlace del correo use el dominio público. |
 
+Resend usa `mail.lourdesmk.site`, verificado con DKIM y SPF en Vercel DNS. El seguimiento de aperturas y clics está desactivado para no reescribir ni exponer el token del enlace. Cada intento usa una clave de idempotencia para evitar correos duplicados.
+
 `GET /api/auth/session` responde 200 con `{ ok: false }` cuando no hay sesión. Un 401 en esa consulta solo confundía la consola: no es un fallo. La sesión dura 7 días en una cookie `HttpOnly`.
+
+El error CORS de `panel.webmanifest` en `*-git-dev-*.vercel.app` viene de la protección SSO del despliegue Preview. No bloquea el correo. Para instalar la app se usa producción: `https://www.lourdesmk.site/estudio`.
 
 ## Decisiones técnicas
 
@@ -110,7 +114,7 @@ Mientras nadie haya guardado desde el panel, la lista vive en `public/content/si
 
 ## Configuración pendiente
 
-- `contact.web3formsKey`: crear una clave gratuita en https://web3forms.com con el correo de Lourdes y pegarla aquí. Mientras esté vacía, el formulario muestra "disponible muy pronto" y el botón queda deshabilitado. La clave es pública por diseño; Web3Forms solo envía al correo asociado.
+- `contact.web3formsKey`: ya está en `site.json`. El formulario de contacto envía desde el navegador a Web3Forms y el mensaje llega a `lourdes.portales5@gmail.com`. La clave es pública por diseño; Web3Forms solo entrega en el correo con el que se creó. El aviso "disponible muy pronto" y el botón deshabilitado aparecen solo si esa clave se borra.
 - `contact.linkedin` y `contact.email`: configurados (LinkedIn sin parámetros de rastreo `utm_*`). Se muestran como botones con ícono, centrados debajo del formulario. El botón del correo copia la dirección al portapapeles y muestra "¡Correo copiado!" por 2 s; si el navegador bloquea el portapapeles, abre la app de correo (`mailto:`).
 - `contact.whatsapp` (formato internacional, por ejemplo `50370000000`): opcionales, se muestran como enlaces directos.
 - Fotos sin fondo en `public/profile/`: `lourdes-perfil.webp` (inicio, `profile.photo`) y `lourdes-contacto.png` (contacto, `contact.photo`). Se muestran sin marco ni recorte. Son de unos 420 px de ancho; si se reemplazan por versiones más grandes se verán más nítidas en pantallas retina. Si `profile.photo` queda vacío, se muestra un monograma.

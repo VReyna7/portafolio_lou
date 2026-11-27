@@ -17,7 +17,7 @@ interface UsedState {
 
 async function updateSealed<T>(pathname: string, secret: string, update: (current: T | null) => T): Promise<void> {
   let lastError: unknown;
-  for (let attempt = 0; attempt < 3; attempt++) {
+  for (let attempt = 0; attempt < 5; attempt++) {
     const current = await readText(pathname);
     const parsed = current ? unseal<T>(secret, current.text) : null;
     const next = seal(secret, update(parsed));
@@ -26,6 +26,10 @@ async function updateSealed<T>(pathname: string, secret: string, update: (curren
       return;
     } catch (error) {
       lastError = error;
+      if (attempt < 4) {
+        // A concurrent request changed the ETag. Give Blob time to expose the new version.
+        await new Promise<void>((resolve) => setTimeout(resolve, 25 * 2 ** attempt));
+      }
     }
   }
   throw lastError;
