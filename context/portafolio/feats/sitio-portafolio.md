@@ -26,7 +26,7 @@ Lourdes abre esa dirección (o el icono instalado), escribe su correo y recibe u
 
 Desde el panel puede crear, ordenar y borrar proyectos, diplomados y experiencias, y subir fotos o videos (máximo 25 MB, directo al almacén). Guardar escribe solo esas tres listas. Perfil, herramientas y contacto siguen en `site.json`: un deploy nuevo los actualiza y no borra lo que ella guardó.
 
-Variables en Vercel, nunca en el repositorio:
+Variables en Vercel, nunca en el repositorio. Las funciones del panel son solo las rutas en `api/` (máximo 12 en el plan Hobby); el código compartido vive en `server/editor` para no contar como función extra.
 
 | Variable | Uso |
 | --- | --- |

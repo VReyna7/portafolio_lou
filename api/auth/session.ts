@@ -1,5 +1,5 @@
-import { json } from '../lib/http';
-import { clearSessionHeader, readSession } from '../lib/session';
+import { json } from '../../server/editor/http';
+import { clearSessionHeader, readSession } from '../../server/editor/session';
 
 export async function GET(request: Request): Promise<Response> {
   const ok = await readSession(request);
