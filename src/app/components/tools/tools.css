@@ -13,54 +13,65 @@
   color: #b9b9c2;
 }
 
-.tools-grid {
+/* Editorial list instead of badge cards: reads more like a real portfolio. */
+.tools-list {
   list-style: none;
   padding: 0;
-  margin: 2.5rem 0 0;
+  margin: 3rem 0 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  column-gap: clamp(2rem, 6vw, 5rem);
 }
 
 .tool {
   display: grid;
-  gap: 0.35rem;
-  padding: 1.25rem;
-  border: 1px solid #2e2e33;
-  border-radius: 18px;
-  background: var(--ink-raised);
-  /* Hover uses `translate` so it never fights GSAP, which animates `transform`. */
-  transition: translate 0.2s ease, border-color 0.2s ease;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding: 1.15rem 0;
+  border-top: 1px solid #2e2e33;
+  transition: border-color 0.2s ease;
+}
+
+.tool:nth-last-child(-n + 2) {
+  border-bottom: 1px solid #2e2e33;
 }
 
 .tool:hover {
-  translate: 0 -4px;
-  border-color: var(--violet);
-}
-
-.tool__badge {
-  width: 48px;
-  height: 48px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  font-weight: 800;
-  color: var(--white);
-  background: var(--violet);
-  margin-bottom: 0.5rem;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.tool:hover .tool__badge {
-  color: var(--violet);
-  background: var(--white);
+  border-top-color: var(--violet);
 }
 
 .tool__name {
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
   font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .tool__area {
-  font-size: 0.875rem;
+  font-size: 0.92rem;
   color: #a3a3ad;
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .tools-list {
+    grid-template-columns: 1fr;
+  }
+
+  .tool:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+
+  .tool:last-child {
+    border-bottom: 1px solid #2e2e33;
+  }
+
+  .tool {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .tool__area {
+    text-align: left;
+  }
 }
