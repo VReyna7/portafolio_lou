@@ -104,12 +104,17 @@
 .contact__form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  column-gap: 1rem;
+  /* Extra row gap leaves room for absolute error text without shifting neighbors. */
+  row-gap: 1.65rem;
+  align-items: start;
 }
 
 .contact__form label {
+  position: relative;
   display: grid;
   gap: 0.4rem;
+  align-content: start;
   font-weight: 600;
   font-size: 0.9rem;
 }
@@ -132,9 +137,23 @@
   border-color: transparent;
 }
 
+/* Absolute errors: showing/hiding text no longer changes label height or grid rows. */
 .contact__form small {
-  color: #b42318;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.2rem);
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.2;
   font-weight: 400;
+  color: #b42318;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact__form small.is-shown {
+  opacity: 1;
 }
 
 .contact__full {
