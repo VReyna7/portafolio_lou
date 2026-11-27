@@ -35,17 +35,17 @@
         <label>
           Tu nombre
           <input type="text" formControlName="name" autocomplete="name" />
-          @if (invalid('name')) {
-            <small>Escribe tu nombre.</small>
-          }
+          <small [class.is-shown]="invalid('name')" aria-live="polite">
+            {{ invalid('name') ? 'Escribe tu nombre.' : '' }}
+          </small>
         </label>
 
         <label>
           Tu correo
           <input type="email" formControlName="email" autocomplete="email" />
-          @if (invalid('email')) {
-            <small>Escribe un correo válido.</small>
-          }
+          <small [class.is-shown]="invalid('email')" aria-live="polite">
+            {{ invalid('email') ? 'Escribe un correo válido.' : '' }}
+          </small>
         </label>
 
         <label>
@@ -66,9 +66,9 @@
         <label class="contact__full">
           Cuéntame sobre tu marca
           <textarea formControlName="message" rows="5"></textarea>
-          @if (invalid('message')) {
-            <small>Cuéntame un poco más (mínimo 10 caracteres).</small>
-          }
+          <small [class.is-shown]="invalid('message')" aria-live="polite">
+            {{ invalid('message') ? 'Cuéntame un poco más (mínimo 10 caracteres).' : '' }}
+          </small>
         </label>
 
         <input type="checkbox" formControlName="botcheck" class="contact__honeypot" tabindex="-1" />
