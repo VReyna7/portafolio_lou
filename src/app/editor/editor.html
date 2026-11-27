@@ -1,0 +1,208 @@
+@if (mode() === 'checking') {
+  <p class="editor__status">Cargando...</p>
+} @else if (mode() === 'login') {
+  <main class="gate">
+    <form class="gate__card" (submit)="submitLogin($event)">
+      <h1>Entrar</h1>
+      <p>Escribe tu correo y te enviamos un enlace. Ábrelo en este mismo aparato.</p>
+      <label>
+        Correo
+        <input
+          type="email"
+          name="email"
+          autocomplete="username"
+          inputmode="email"
+          required
+          [value]="email()"
+          (input)="email.set(text($event))"
+        />
+      </label>
+      <button class="btn btn--primary" type="submit" [disabled]="busy()">
+        {{ busy() ? 'Enviando...' : 'Enviarme el enlace' }}
+      </button>
+      @if (notice()) {
+        <p class="editor__note">{{ notice() }}</p>
+      }
+      @if (error()) {
+        <p class="editor__error">{{ error() }}</p>
+      }
+    </form>
+    <section class="install">
+      <h2>Instalar</h2>
+      @if (canInstall()) {
+        <button class="btn btn--ghost" type="button" (click)="install()">Instalar en este aparato</button>
+      } @else {
+        <p>En el celular: Compartir y luego «Agregar a inicio». En la computadora, el icono de instalar del navegador.</p>
+      }
+    </section>
+  </main>
+} @else if (draft(); as site) {
+  <div class="editor">
+    <header class="editor__bar">
+      <h1>Editar portafolio</h1>
+      <div class="editor__actions">
+        <a class="btn btn--ghost" href="/" target="_blank" rel="noopener">Ver el sitio</a>
+        <button class="btn btn--ghost" type="button" (click)="logout()">Salir</button>
+        <button class="btn btn--primary" type="button" (click)="save()" [disabled]="busy() || !dirty()">
+          {{ busy() ? 'Guardando...' : 'Guardar' }}
+        </button>
+      </div>
+    </header>
+
+    <p class="editor__lead">
+      Aquí agregas proyectos, diplomados y experiencia. Un diseño nuevo, como un modal o una sección distinta, se sigue haciendo en código.
+    </p>
+    @if (notice()) {
+      <p class="editor__note">{{ notice() }}</p>
+    }
+    @if (error()) {
+      <p class="editor__error">{{ error() }}</p>
+    }
+
+    <div class="tabs" role="tablist">
+      <button type="button" [class.is-on]="panel() === 'projects'" (click)="choose('projects')">Proyectos</button>
+      <button type="button" [class.is-on]="panel() === 'diplomas'" (click)="choose('diplomas')">Diplomados</button>
+      <button type="button" [class.is-on]="panel() === 'experience'" (click)="choose('experience')">Experiencia</button>
+    </div>
+
+    @switch (panel()) {
+      @case ('projects') {
+        <div class="picker">
+          <button class="btn btn--primary" type="button" (click)="addProject()">Nuevo proyecto</button>
+          @for (item of site.projects; track item.slug; let i = $index) {
+            <button type="button" class="picker__item" [class.is-on]="selected() === i" (click)="selected.set(i)">
+              {{ item.title || 'Sin título' }}
+            </button>
+          }
+        </div>
+        @if (site.projects[selected()]; as project) {
+          <form class="sheet">
+            <div class="row">
+              <button class="btn btn--ghost" type="button" (click)="moveProject(selected(), -1)">Subir</button>
+              <button class="btn btn--ghost" type="button" (click)="moveProject(selected(), 1)">Bajar</button>
+              <button class="btn btn--ghost" type="button" (click)="removeProject(selected())">Quitar</button>
+            </div>
+            <label>Título<input [value]="project.title" (input)="renameProject(selected(), text($event))" /></label>
+            <label>Categoría<input [value]="project.category" (input)="patchProject(selected(), { category: text($event) })" /></label>
+            <label>Resumen<textarea rows="3" [value]="project.summary" (input)="patchProject(selected(), { summary: text($event) })"></textarea></label>
+            <label>Mi rol<textarea rows="3" [value]="project.role" (input)="patchProject(selected(), { role: text($event) })"></textarea></label>
+            <label>Funciones, una por línea<textarea rows="4" [value]="tasksOf(project)" (input)="setTasks(selected(), text($event))"></textarea></label>
+            <label>El proyecto<textarea rows="5" [value]="project.description" (input)="patchProject(selected(), { description: text($event) })"></textarea></label>
+            <label>Enlace a más material<input [value]="project.driveUrl" (input)="patchProject(selected(), { driveUrl: text($event) })" /></label>
+            <label class="color">Color<input type="color" [value]="project.accent" (input)="patchProject(selected(), { accent: text($event) })" /></label>
+            <div class="file">
+              <span>Portada</span>
+              @if (project.cover) {
+                <img [src]="project.cover" alt="" />
+              }
+              <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="uploadCover($event, selected())" />
+              @if (project.cover) {
+                <button class="btn btn--ghost" type="button" (click)="patchProject(selected(), { cover: '' })">Quitar portada</button>
+              }
+            </div>
+
+            <h2>Evidencias</h2>
+            <button class="btn btn--ghost" type="button" (click)="addEvidence(selected())">Agregar evidencia</button>
+            @for (item of project.evidence; track $index; let e = $index) {
+              <fieldset>
+                <legend>Evidencia {{ e + 1 }}</legend>
+                <div class="row">
+                  <button class="btn btn--ghost" type="button" (click)="moveEvidence(selected(), e, -1)">Subir</button>
+                  <button class="btn btn--ghost" type="button" (click)="moveEvidence(selected(), e, 1)">Bajar</button>
+                  <button class="btn btn--ghost" type="button" (click)="removeEvidence(selected(), e)">Quitar</button>
+                </div>
+                <label>Título<input [value]="item.title" (input)="patchEvidence(selected(), e, { title: text($event) })" /></label>
+                <label>Descripción<textarea rows="3" [value]="item.description" (input)="patchEvidence(selected(), e, { description: text($event) })"></textarea></label>
+                <div class="file">
+                  <span>Foto</span>
+                  @if (item.image) { <img [src]="item.image" alt="" /> }
+                  <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="uploadEvidenceFile($event, selected(), e, 'image')" />
+                </div>
+                <div class="file">
+                  <span>Video mp4, máximo 25 MB</span>
+                  @if (item.video) { <p class="editor__note">Video listo</p> }
+                  <input type="file" accept="video/mp4,video/quicktime" (change)="uploadEvidenceFile($event, selected(), e, 'video')" />
+                </div>
+                <details>
+                  <summary>Opciones del video</summary>
+                  <label>Póster
+                    <input type="file" accept="image/jpeg,image/png,image/webp" (change)="uploadEvidenceFile($event, selected(), e, 'poster')" />
+                  </label>
+                  <label>Proporción, por ejemplo 9 / 16<input [value]="item.ratio || ''" (input)="patchEvidence(selected(), e, { ratio: text($event) })" /></label>
+                  <label>Velocidad<input type="number" min="0.25" max="3" step="0.25" [value]="item.speed || 1" (input)="patchEvidence(selected(), e, { speed: num($event) })" /></label>
+                  <label class="check"><input type="checkbox" [checked]="!!item.sound" (change)="patchEvidence(selected(), e, { sound: checked($event) })" /> El video tiene audio</label>
+                </details>
+              </fieldset>
+            }
+          </form>
+        } @else {
+          <p class="editor__note">Todavía no hay proyectos en esta lista.</p>
+        }
+      }
+      @case ('diplomas') {
+        @if (site.certifications; as certs) {
+          <form class="sheet">
+            <label>Título de la sección<input [value]="certs.title" (input)="patchCertificationSection({ title: text($event) })" /></label>
+            <label>Descripción<textarea rows="2" [value]="certs.description" (input)="patchCertificationSection({ description: text($event) })"></textarea></label>
+            <button class="btn btn--primary" type="button" (click)="addCertification()">Nuevo diplomado</button>
+            @for (item of certs.items; track $index; let i = $index) {
+              <fieldset>
+                <legend>{{ item.title || 'Diplomado' }}</legend>
+                <div class="row">
+                  <button class="btn btn--ghost" type="button" (click)="moveCertification(i, -1)">Subir</button>
+                  <button class="btn btn--ghost" type="button" (click)="moveCertification(i, 1)">Bajar</button>
+                  <button class="btn btn--ghost" type="button" (click)="removeCertification(i)">Quitar</button>
+                </div>
+                <label>Título<input [value]="item.title" (input)="patchCertification(i, { title: text($event) })" /></label>
+                <label>Institución<input [value]="item.issuer" (input)="patchCertification(i, { issuer: text($event) })" /></label>
+                <label>Año<input [value]="item.year || ''" (input)="patchCertification(i, { year: text($event) })" /></label>
+                <div class="file">
+                  <span>Foto del diploma</span>
+                  @if (item.image) { <img [src]="item.image" alt="" /> }
+                  <input type="file" accept="image/jpeg,image/png,image/webp" (change)="uploadDiploma($event, i)" />
+                </div>
+              </fieldset>
+            }
+          </form>
+        }
+      }
+      @case ('experience') {
+        @if (site.experience; as jobs) {
+          <form class="sheet">
+            <label>Título de la sección<input [value]="jobs.title" (input)="patchExperienceSection({ title: text($event) })" /></label>
+            <label>Descripción<textarea rows="2" [value]="jobs.description" (input)="patchExperienceSection({ description: text($event) })"></textarea></label>
+            <button class="btn btn--primary" type="button" (click)="addExperience()">Nueva experiencia</button>
+            @for (item of jobs.items; track $index; let i = $index) {
+              <fieldset>
+                <legend>{{ item.role || 'Experiencia' }}</legend>
+                <div class="row">
+                  <button class="btn btn--ghost" type="button" (click)="moveExperience(i, -1)">Subir</button>
+                  <button class="btn btn--ghost" type="button" (click)="moveExperience(i, 1)">Bajar</button>
+                  <button class="btn btn--ghost" type="button" (click)="removeExperience(i)">Quitar</button>
+                </div>
+                <label>Puesto<input [value]="item.role" (input)="patchExperience(i, { role: text($event) })" /></label>
+                <label>Lugar<input [value]="item.place" (input)="patchExperience(i, { place: text($event) })" /></label>
+                <div class="split">
+                  <label>Desde<input [value]="item.start" placeholder="2024" (input)="patchExperience(i, { start: text($event) })" /></label>
+                  <label>Hasta<input [value]="item.end" placeholder="Actual" (input)="patchExperience(i, { end: text($event) })" /></label>
+                </div>
+                <label>Qué hiciste<textarea rows="4" [value]="item.description" (input)="patchExperience(i, { description: text($event) })"></textarea></label>
+              </fieldset>
+            }
+          </form>
+        }
+      }
+    }
+
+    <section class="install">
+      <h2>Instalar</h2>
+      @if (canInstall()) {
+        <button class="btn btn--ghost" type="button" (click)="install()">Instalar en este aparato</button>
+      } @else {
+        <p>En el celular: Compartir y luego «Agregar a inicio». El icono abre esta pantalla.</p>
+      }
+    </section>
+  </div>
+} @else {
+  <p class="editor__status">{{ error() || 'No se pudo abrir el panel.' }}</p>
+}

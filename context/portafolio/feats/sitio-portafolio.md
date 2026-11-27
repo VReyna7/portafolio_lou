@@ -14,12 +14,35 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 | Herramientas | `src/app/components/tools` | `tools` |
 | Proyectos (galería) | `src/app/components/projects` | `projects` |
 | Ficha de proyecto | `src/app/components/project-detail` | proyecto seleccionado |
+| Experiencia | `src/app/components/experience` | `experience` (oculta si no hay elementos) |
 | Contacto | `src/app/components/contact` | `contact` |
+| Diplomados | `src/app/components/certifications` | `certifications` (oculta si no hay elementos) |
+
+## Panel de edición
+
+Ruta sin enlace: `/estudio`. El mismo proyecto y el mismo dominio. Un subdominio quedaría publicado en los registros de certificados.
+
+Lourdes abre esa dirección (o el icono instalado), escribe su correo y recibe un enlace de un solo uso que vence en 15 minutos. No hay contraseña. El enlace solo se envía si el correo es `EDITOR_EMAIL` o `veduardo239@gmail.com` (pruebas del desarrollador). Máximo 8 pedidos cada 10 minutos por IP y 5 correos por hora. El contador y los enlaces ya usados se guardan cifrados. Web3Forms entrega en el buzón de la clave; la copia al segundo correo depende del plan. Con `RESEND_API_KEY` y `EDITOR_FROM` el enlace sale directo al correo que lo pidió.
+
+Desde el panel puede crear, ordenar y borrar proyectos, diplomados y experiencias, y subir fotos o videos (máximo 25 MB, directo al almacén). Guardar escribe solo esas tres listas. Perfil, herramientas y contacto siguen en `site.json`: un deploy nuevo los actualiza y no borra lo que ella guardó.
+
+Variables en Vercel, nunca en el repositorio:
+
+| Variable | Uso |
+| --- | --- |
+| `AUTH_SECRET` | Secreto largo para firmar el enlace y la sesión. |
+| `EDITOR_EMAIL` | Correo de Lourdes. Puede haber varios, separados por coma. `veduardo239@gmail.com` ya está autorizado en código para pruebas. |
+| `BLOB_READ_WRITE_TOKEN` | Lo crea Vercel al conectar un Blob store público. Sin esto el sitio sigue leyendo `site.json` y el panel no puede enviar el enlace ni guardar. |
+
+Opcional: `WEB3FORMS_KEY` (si no está, se usa la clave de `site.json`), `RESEND_API_KEY` y `EDITOR_FROM` si Web3Forms recorta el enlace, y `SITE_ORIGIN` (`https://dominio`) si el enlace debe salir siempre con el dominio público.
+
+El correo sale por Web3Forms, que ya entrega en el buzón de Lourdes. La sesión dura 7 días en una cookie `HttpOnly`.
 
 ## Decisiones técnicas
 
-- Todo el contenido vive en `public/content/site.json` y se carga en tiempo de ejecución con `ContentService`. Cambiar textos o agregar proyectos no requiere tocar código.
-- Sin backend: el formulario envía a Web3Forms, que reenvía el mensaje al correo de Lourdes.
+- Todo el contenido público se arma en cada visita. Perfil, herramientas y contacto salen de `public/content/site.json`. Proyectos, diplomados y experiencia salen de ese archivo hasta el primer guardado del panel; después los guarda el panel y un deploy no los pisa.
+- El panel vive en `/estudio`. No hay enlace en el sitio. La entrada es un enlace de un solo uso al correo de `EDITOR_EMAIL` o al del desarrollador. Ver la sección Panel de edición.
+- Sin backend de formulario: el formulario envía a Web3Forms, que reenvía el mensaje al correo de Lourdes.
 - Los proyectos se abren en un `<dialog>` nativo dentro de la misma página (sin rutas por proyecto), en el componente `ProjectDetail`. La ficha muestra solo: banda de título, "Mi rol", "El proyecto" y "Proceso y evidencias" (pasos numerados alternando imagen y texto). No tiene formulario ni correo.
 - Paleta: blanco, un solo morado de marca (`--violet`) y negro (`--ink`) como segundo color. Herramientas es una banda negra de ancho completo, el pie de página es negro y los subtítulos llevan una raya morada.
 - Las herramientas se muestran con siglas, no con logos oficiales, para no usar marcas registradas.
@@ -36,6 +59,8 @@ La marca del sitio es Lourdes. Los proyectos (por ejemplo, Editorial Manu) son t
 - Los efectos hover usan las propiedades CSS `translate` y `rotate`, no `transform`, para no chocar con GSAP.
 
 ## Cómo agregar un proyecto
+
+Mientras nadie haya guardado desde el panel, la lista vive en `public/content/site.json`. Después del primer guardado, los proyectos se editan en `/estudio`. Cambiar `projects` en git ya no se publica: el panel es la fuente. Perfil, herramientas y contacto sí se siguen editando en el JSON.
 
 1. Abrir `public/content/site.json`.
 2. Copiar un bloque dentro de `projects` y pegarlo después del último (separado por coma).

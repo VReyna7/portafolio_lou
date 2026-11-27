@@ -1,0 +1,22 @@
+<section id="experiencia" class="section" appReveal=".eyebrow, .section__title, .section__lead, .job">
+  <p class="eyebrow">Trayectoria</p>
+  <h2 class="section__title">{{ experience().title }}</h2>
+  @if (experience().description) {
+    <p class="section__lead">{{ experience().description }}</p>
+  }
+
+  <ol class="jobs">
+    @for (item of experience().items; track $index) {
+      <li class="job">
+        @if (when(item.start, item.end); as dates) {
+          <p class="job__when">{{ dates }}</p>
+        }
+        <h3 class="job__role">{{ item.role }}</h3>
+        <p class="job__place">{{ item.place }}</p>
+        @if (item.description) {
+          <p class="job__text">{{ item.description }}</p>
+        }
+      </li>
+    }
+  </ol>
+</section>

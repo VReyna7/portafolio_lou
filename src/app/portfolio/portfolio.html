@@ -5,6 +5,9 @@
       <a href="#inicio">Inicio</a>
       <a href="#herramientas">Herramientas</a>
       <a href="#proyectos">Proyectos</a>
+      @if (site.experience?.items?.length) {
+        <a href="#experiencia">Experiencia</a>
+      }
       <a href="#contacto" class="topbar__cta">Contacto</a>
     </nav>
   </header>
@@ -13,6 +16,9 @@
     <app-hero [profile]="site.profile" />
     <app-tools [tools]="site.tools" />
     <app-projects [projects]="site.projects" />
+    @if (site.experience?.items?.length) {
+      <app-experience [experience]="site.experience!" />
+    }
     <app-contact [contact]="site.contact" />
     @if (site.certifications?.items?.length) {
       <app-certifications [certifications]="site.certifications!" />

@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.jobs {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.job {
+  padding: 1.15rem 1.15rem 1.15rem 1.35rem;
+  border-left: 3px solid var(--violet);
+  background: var(--paper);
+}
+
+.job__when {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.job__role {
+  margin: 0.2rem 0 0;
+  font-size: 1.35rem;
+}
+
+.job__place {
+  margin: 0.15rem 0 0;
+  font-weight: 700;
+}
+
+.job__text {
+  margin: 0.55rem 0 0;
+  color: var(--ink-soft);
+}

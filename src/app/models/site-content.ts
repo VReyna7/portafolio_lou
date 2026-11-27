@@ -75,6 +75,22 @@ export interface CertificationsSection {
   items: Certification[];
 }
 
+export interface ExperienceItem {
+  role: string;
+  place: string;
+  /** Free text, for example "2024" or "mar 2024". */
+  start: string;
+  /** Empty means the role is current. */
+  end: string;
+  description: string;
+}
+
+export interface ExperienceSection {
+  title: string;
+  description: string;
+  items: ExperienceItem[];
+}
+
 export interface SiteContent {
   profile: Profile;
   tools: ToolsSection;
@@ -82,4 +98,6 @@ export interface SiteContent {
   contact: ContactSection;
   /** Optional closing section; hidden when missing or empty. */
   certifications?: CertificationsSection;
+  /** Optional work history; hidden when missing or empty. */
+  experience?: ExperienceSection;
 }
