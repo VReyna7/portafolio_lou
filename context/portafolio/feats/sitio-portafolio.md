@@ -40,6 +40,8 @@ Variables en Vercel, nunca en el repositorio. Las funciones del panel son solo l
 
 Resend usa `mail.lourdesmk.site`, verificado con DKIM y SPF en Vercel DNS. El seguimiento de aperturas y clics está desactivado para no reescribir ni exponer el token del enlace. Cada intento usa una clave de idempotencia para evitar correos duplicados.
 
+Los límites y enlaces consumidos se escriben como eventos temporales independientes en Blob (caducan en un día). Así no hay colisiones de `ETag` cuando dos comprobaciones ocurren seguidas y un enlace usado no puede sobrescribirse.
+
 `GET /api/auth/session` responde 200 con `{ ok: false }` cuando no hay sesión. Un 401 en esa consulta solo confundía la consola: no es un fallo. La sesión dura 7 días en una cookie `HttpOnly`.
 
 El error CORS de `panel.webmanifest` en `*-git-dev-*.vercel.app` viene de la protección SSO del despliegue Preview. No bloquea el correo. Para instalar la app se usa producción: `https://www.lourdesmk.site/estudio`.

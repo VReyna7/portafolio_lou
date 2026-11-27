@@ -1,42 +1,31 @@
-import { createHash } from 'node:crypto';
-import { seal, unseal } from './seal.js';
-import { RATE_PATH, USED_PATH, readText, writeText } from './store.js';
+import { createHash, randomUUID } from 'node:crypto';
+import { BlobPreconditionFailedError } from '@vercel/blob';
+import { seal } from './seal.js';
+import { RATE_PATH, USED_PATH, countRecent, createTemporaryText } from './store.js';
 
 const IP_LIMIT = 8;
 const IP_WINDOW_MS = 10 * 60 * 1000;
 const MAIL_LIMIT = 5;
 const MAIL_WINDOW_MS = 60 * 60 * 1000;
 
-interface RateState {
-  hits: Record<string, number[]>;
-}
-
-interface UsedState {
-  links: { jti: string; exp: number }[];
-}
-
-async function updateSealed<T>(pathname: string, secret: string, update: (current: T | null) => T): Promise<void> {
-  let lastError: unknown;
-  for (let attempt = 0; attempt < 5; attempt++) {
-    const current = await readText(pathname);
-    const parsed = current ? unseal<T>(secret, current.text) : null;
-    const next = seal(secret, update(parsed));
-    try {
-      await writeText(pathname, next, 'text/plain', current?.etag);
-      return;
-    } catch (error) {
-      lastError = error;
-      if (attempt < 4) {
-        // A concurrent request changed the ETag. Give Blob time to expose the new version.
-        await new Promise<void>((resolve) => setTimeout(resolve, 25 * 2 ** attempt));
-      }
-    }
+async function claimRate(secret: string, key: string, limit: number, windowMs: number): Promise<boolean> {
+  const now = Date.now();
+  const bucket = Math.floor(now / windowMs);
+  const prefixes = [
+    `${RATE_PATH}${key}/${bucket}/`,
+    `${RATE_PATH}${key}/${bucket - 1}/`,
+  ];
+  const counts = await Promise.all(
+    prefixes.map((prefix) => countRecent(prefix, now - windowMs, limit)),
+  );
+  if (counts[0] + counts[1] >= limit) {
+    return false;
   }
-  throw lastError;
-}
-
-function prune(list: number[] | undefined, now: number, windowMs: number): number[] {
-  return (list ?? []).filter((stamp) => now - stamp < windowMs);
+  await createTemporaryText(
+    `${prefixes[0]}${now}-${randomUUID()}.txt`,
+    seal(secret, { timestamp: now }),
+  );
+  return true;
 }
 
 export function hashIp(secret: string, ip: string): string {
@@ -45,54 +34,23 @@ export function hashIp(secret: string, ip: string): string {
 
 /** Counts an attempt from this IP. False when the IP is already over the limit. */
 export async function claimIp(secret: string, ipHash: string): Promise<boolean> {
-  let allowed = false;
-  await updateSealed<RateState>(RATE_PATH, secret, (current) => {
-    const now = Date.now();
-    const hits = { ...(current?.hits ?? {}) };
-    const ipHits = prune(hits[ipHash], now, IP_WINDOW_MS);
-    if (ipHits.length >= IP_LIMIT) {
-      allowed = false;
-      hits[ipHash] = ipHits;
-      return { hits };
-    }
-    allowed = true;
-    hits[ipHash] = [...ipHits, now];
-    return { hits };
-  });
-  return allowed;
+  return claimRate(secret, `ip/${ipHash}`, IP_LIMIT, IP_WINDOW_MS);
 }
 
 /** Counts an email that will actually be sent. Shared by every IP, so her inbox stays quiet. */
 export async function claimMail(secret: string): Promise<boolean> {
-  let allowed = false;
-  await updateSealed<RateState>(RATE_PATH, secret, (current) => {
-    const now = Date.now();
-    const hits = { ...(current?.hits ?? {}) };
-    const mailHits = prune(hits['mail'], now, MAIL_WINDOW_MS);
-    if (mailHits.length >= MAIL_LIMIT) {
-      allowed = false;
-      hits['mail'] = mailHits;
-      return { hits };
-    }
-    allowed = true;
-    hits['mail'] = [...mailHits, now];
-    return { hits };
-  });
-  return allowed;
+  return claimRate(secret, 'mail', MAIL_LIMIT, MAIL_WINDOW_MS);
 }
 
 /** True the first time this link id is seen. A second open does not start a session. */
 export async function consumeLink(secret: string, jti: string, exp: number): Promise<boolean> {
-  let fresh = false;
-  await updateSealed<UsedState>(USED_PATH, secret, (current) => {
-    const now = Date.now();
-    const links = (current?.links ?? []).filter((link) => link.exp > now);
-    if (links.some((link) => link.jti === jti)) {
-      fresh = false;
-      return { links };
+  try {
+    await createTemporaryText(`${USED_PATH}${jti}.txt`, seal(secret, { exp }));
+    return true;
+  } catch (error) {
+    if (error instanceof BlobPreconditionFailedError) {
+      return false;
     }
-    fresh = true;
-    return { links: [...links, { jti, exp }] };
-  });
-  return fresh;
+    throw error;
+  }
 }
