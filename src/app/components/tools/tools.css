@@ -10,47 +10,82 @@
 }
 
 .section__lead {
+  max-width: 36rem;
   color: #b9b9c2;
 }
 
-/* Editorial list instead of badge cards: reads more like a real portfolio. */
 .tools-list {
   list-style: none;
   padding: 0;
   margin: 3rem 0 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: clamp(2rem, 6vw, 5rem);
+  column-gap: clamp(2.5rem, 7vw, 6rem);
+  row-gap: 0;
 }
 
 .tool {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 1rem;
-  align-items: baseline;
-  padding: 1.15rem 0;
+  grid-template-columns: auto auto 1fr;
+  gap: 0.9rem;
+  align-items: center;
+  padding: 1.2rem 0 1.2rem 0.85rem;
   border-top: 1px solid #2e2e33;
-  transition: border-color 0.2s ease;
+  transition: background 0.25s ease;
 }
 
 .tool:nth-last-child(-n + 2) {
   border-bottom: 1px solid #2e2e33;
 }
 
-.tool:hover {
-  border-top-color: var(--violet);
+/* Left accent mark — drawn by GSAP on scroll. */
+.tool__mark {
+  position: absolute;
+  left: 0;
+  top: 1.15rem;
+  bottom: 1.15rem;
+  width: 2px;
+  background: var(--violet);
+  transform-origin: top;
+}
+
+.tool__icon {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  color: var(--violet);
+  border: 1px solid #3a3a42;
+  border-radius: 10px;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.tool:hover .tool__icon {
+  color: var(--white);
+  border-color: var(--violet);
+  background: var(--violet);
+}
+
+.tool__copy {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
 }
 
 .tool__name {
-  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 .tool__area {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   color: #a3a3ad;
-  text-align: right;
+}
+
+.tool:hover {
+  background: linear-gradient(90deg, rgb(123 44 191 / 0.12), transparent 70%);
 }
 
 @media (max-width: 720px) {
@@ -64,14 +99,5 @@
 
   .tool:last-child {
     border-bottom: 1px solid #2e2e33;
-  }
-
-  .tool {
-    grid-template-columns: 1fr;
-    gap: 0.25rem;
-  }
-
-  .tool__area {
-    text-align: left;
   }
 }
